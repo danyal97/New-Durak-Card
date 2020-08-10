@@ -1,3 +1,47 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:27ade68ae7e97bc58d2095a4c5919e41c78bea69fc7f4663a774d9179ca8c773
-size 1318
+{
+  "project_info": {
+    "project_number": "478131342210",
+    "firebase_url": "https://durakcard-2a29c.firebaseio.com",
+    "project_id": "durakcard-2a29c",
+    "storage_bucket": "durakcard-2a29c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478131342210:android:194e26ad574f2c42081d9b",
+        "android_client_info": {
+          "package_name": "com.danyal.Firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478131342210-djn2f085388jtq0t3qdijs2n934mhukt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhJcyg42vuqAQbvq1wkDsw1rAydb1lFWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478131342210-djn2f085388jtq0t3qdijs2n934mhukt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "478131342210-3t0b8p91qp1e0knne2nqosvnvr7ilbui.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.danyal.Firebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
