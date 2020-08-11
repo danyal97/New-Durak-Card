@@ -9,14 +9,15 @@ public class DecDistributor : MonoBehaviour
     private Vector3 topPosition;
     public GameObject player1Cards;
     public float speed;
-    private float waitForSeconds = 5000;
+    private float waitForSecond = 5000;
     int carddCurrentIndex = 35;
     // Start is called before the first frame update
     private void Start()
     {
-        ShuffleCards();
-
+        //Time.timeScale = 500;
         
+
+
         //Distribute();
 
         //if (cards[12].gameObject.tag == "8C")
@@ -33,6 +34,7 @@ public class DecDistributor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ShuffleCards();
 
         //Distribute();
         //StackCards();

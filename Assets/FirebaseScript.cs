@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Connect;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FirebaseScript : MonoBehaviour
 {
@@ -15,21 +16,19 @@ public class FirebaseScript : MonoBehaviour
     DatabaseReference reference;
     FirebaseAuth auth;
     Firebase.Auth.FirebaseUser user;
+    
+    public static bool firebaseReady;
     // Start is called before the first frame update
     void Start()
     {
 
 
-
-        // #1
-        
-        
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
-
             {
+                Debug.Log("Firebase is ready for use.");
+                firebaseReady = true;
                 // Create and hold a reference to your FirebaseApp,
                 // where app is a Firebase.FirebaseApp property of your application class.
                 //   app = Firebase.FirebaseApp.DefaultInstance;
@@ -38,21 +37,24 @@ public class FirebaseScript : MonoBehaviour
             }
             else
             {
+                firebaseReady = false;
                 UnityEngine.Debug.LogError(System.String.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
                 // Firebase Unity SDK is not safe to use here.
             }
         });
-
-        // #2
-        // Set up the Editor before calling into the realtime database.
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://durakcard-2a29c.firebaseio.com/");
+
+
+        //InitializeFirebase();
+
+
+
 
 
         // #3
         // Get the root reference location of the database.
         //reference = FirebaseDatabase.DefaultInstance.RootReference;
-        //auth= Firebase.Auth.FirebaseAuth.DefaultInstance;
 
         //string DebugMsg = saveDataToFirebase(002, "Asal Alghamdi ", "Jeddah");
         //Debug.Log(DebugMsg);
@@ -82,7 +84,7 @@ public class FirebaseScript : MonoBehaviour
         //    Debug.LogFormat("Firebase user created successfully: {0} ({1})",
         //        newUser.DisplayName, newUser.UserId);
         //});
-        InitializeFirebase();
+
 
         //auth.SignInWithEmailAndPasswordAsync("fhgfghf2@gmail.com", "fgghfdsffshgfghf").ContinueWith(task => {
         //    if (task.IsCanceled)
@@ -101,17 +103,30 @@ public class FirebaseScript : MonoBehaviour
         //});
     }
 
+     void Update()
+    {
+        if(firebaseReady)
+        {
+            
 
+            auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            InitializeFirebase();
+        }
+        
+        
+    }
     void InitializeFirebase()
     {
-        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        auth.StateChanged += AuthStateChanged;
-        AuthStateChanged(this, null);
+        
+            auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            auth.StateChanged += AuthStateChanged;
+            AuthStateChanged(this, null);
+        
     }
 
     void AuthStateChanged(object sender, System.EventArgs eventArgs)
     {
-         
+
         if (auth.CurrentUser != user)
         {
             bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
@@ -123,6 +138,10 @@ public class FirebaseScript : MonoBehaviour
             if (signedIn)
             {
                 Debug.Log("already Signed in " + user.UserId);
+                //SceneManager.LoadScene("SampleScene");
+                SceneManager.LoadScene("SampleScene");
+
+
                 //auth.SignOut();
                 //displayName = user.DisplayName ?? "";
                 //emailAddress = user.Email ?? "";
@@ -131,12 +150,37 @@ public class FirebaseScript : MonoBehaviour
         }
     }
 
-    //public string saveDataToFirebase(int id, string name, string city) // نفرض اننا حابين نعمل قاعدة بيانات للموظفين كل موظف عنده بيانات مثل ID, Name, City
-    //{
+    public  void CheckIfReady()
+    {
 
-    //    reference.Child(id.ToString()).Child("Name").SetValueAsync(name);
-    //    reference.Child(id.ToString()).Child("City").SetValueAsync(city);
-    //    return "Save data to firebase Done.";
-    //}
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
+            Firebase.DependencyStatus dependencyStatus = task.Result;
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            {
+
+                Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
+                firebaseReady = true;
+
+                Debug.Log("Firebase is ready for use.");
+
+               
+
+                // Create and hold a reference to your FirebaseApp, i.e.
+                //   app = Firebase.FirebaseApp.DefaultInstance;
+                // where app is a Firebase.FirebaseApp property of your application class.
+
+                // Set a flag here indicating that Firebase is ready to use by your
+                // application.
+            }
+            else
+            {
+                firebaseReady = false;
+                UnityEngine.Debug.LogError(System.String.Format(
+                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                // Firebase Unity SDK is not safe to use here.
+            }
+        });
+    }
+
 
 }
