@@ -14,8 +14,10 @@ public class DecDistributor : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+
+        ShuffleCards();
         //Time.timeScale = 500;
-        
+
 
 
         //Distribute();
@@ -34,7 +36,7 @@ public class DecDistributor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ShuffleCards();
+        //ShuffleCards();
 
         //Distribute();
         //StackCards();
