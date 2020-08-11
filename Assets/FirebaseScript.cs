@@ -51,8 +51,8 @@ public class FirebaseScript : MonoBehaviour
 
         // #3
         // Get the root reference location of the database.
-        reference = FirebaseDatabase.DefaultInstance.RootReference;
-        auth= Firebase.Auth.FirebaseAuth.DefaultInstance;
+        //reference = FirebaseDatabase.DefaultInstance.RootReference;
+        //auth= Firebase.Auth.FirebaseAuth.DefaultInstance;
 
         //string DebugMsg = saveDataToFirebase(002, "Asal Alghamdi ", "Jeddah");
         //Debug.Log(DebugMsg);
@@ -84,21 +84,21 @@ public class FirebaseScript : MonoBehaviour
         //});
         InitializeFirebase();
 
-        auth.SignInWithEmailAndPasswordAsync("fhgfghf2@gmail.com", "fgghfdsffshgfghf").ContinueWith(task => {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                return;
-            }
-            Firebase.Auth.FirebaseUser newUser = task.Result;
-            //Debug.LogFormat("User signed in successfully: {0} ({1})",
-            //    newUser.DisplayName, newUser.UserId);
-        });
+        //auth.SignInWithEmailAndPasswordAsync("fhgfghf2@gmail.com", "fgghfdsffshgfghf").ContinueWith(task => {
+        //    if (task.IsCanceled)
+        //    {
+        //        Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
+        //        return;
+        //    }
+        //    if (task.IsFaulted)
+        //    {
+        //        Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+        //        return;
+        //    }
+        //    Firebase.Auth.FirebaseUser newUser = task.Result;
+        //    //Debug.LogFormat("User signed in successfully: {0} ({1})",
+        //    //    newUser.DisplayName, newUser.UserId);
+        //});
     }
 
 
@@ -117,13 +117,13 @@ public class FirebaseScript : MonoBehaviour
             bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
             if (!signedIn && user != null)
             {
-                Debug.Log("Signed out " + user.UserId);
+                Debug.Log("Not Signed in " + user.UserId);
             }
             user = auth.CurrentUser;
             if (signedIn)
             {
-                Debug.Log("Signed in " + user.UserId);
-                auth.SignOut();
+                Debug.Log("already Signed in " + user.UserId);
+                //auth.SignOut();
                 //displayName = user.DisplayName ?? "";
                 //emailAddress = user.Email ?? "";
                 //photoUrl = user.PhotoUrl ?? "";
@@ -131,12 +131,12 @@ public class FirebaseScript : MonoBehaviour
         }
     }
 
-    public string saveDataToFirebase(int id, string name, string city) // نفرض اننا حابين نعمل قاعدة بيانات للموظفين كل موظف عنده بيانات مثل ID, Name, City
-    {
+    //public string saveDataToFirebase(int id, string name, string city) // نفرض اننا حابين نعمل قاعدة بيانات للموظفين كل موظف عنده بيانات مثل ID, Name, City
+    //{
 
-        reference.Child(id.ToString()).Child("Name").SetValueAsync(name);
-        reference.Child(id.ToString()).Child("City").SetValueAsync(city);
-        return "Save data to firebase Done.";
-    }
+    //    reference.Child(id.ToString()).Child("Name").SetValueAsync(name);
+    //    reference.Child(id.ToString()).Child("City").SetValueAsync(city);
+    //    return "Save data to firebase Done.";
+    //}
 
 }
