@@ -110,7 +110,7 @@ public class FirebaseScript : MonoBehaviour
             
 
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-            
+            //auth.SignOut();
             InitializeFirebase();
         }
         
