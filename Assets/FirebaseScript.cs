@@ -6,7 +6,7 @@ using Firebase.Unity.Editor;
 
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Connect;
+//using UnityEditor.Connect;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
