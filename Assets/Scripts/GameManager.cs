@@ -3,14 +3,25 @@ using UnityEngine;
 using System.Threading;
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gameManager;
     public GameObject[] cards = new GameObject[36];
-    
+    public GameObject[] newCards = new GameObject[23];
+    public enum Player { player1, player2, player3, player4 };
+    public GameObject player1dec;
+    public GameObject player2dec;
+
+    public Player p = Player.player1;
+
     private Vector3 topPosition;
     public float speed;
     private float waitForSecond = 5000;
     int carddCurrentIndex = 35;
     public GameObject player1, player2, player3, player4;
+    bool isRestakingDone = false;
+    int currentPositionOffCards = 22;
     
+
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -54,6 +65,25 @@ public class GameManager : MonoBehaviour
         cards[cards.Length - 1].GetComponent<moveCard>().isOnTop=  true;
         StackCards();
     }
+    public void DrawCards(int cardsRequired,Player p)
+    {
+        int newCurrentPostionOfCards = currentPositionOffCards - cardsRequired;
+        if (p == Player.player1) {
+            for (int i = currentPositionOffCards; i >= newCurrentPostionOfCards; i--)
+            {
+                player1dec.gameObject.GetComponent<addCards>().onEnterReplica(newCards[i]);
+            }
+            currentPositionOffCards -= cardsRequired;
+        }
+        if (p == Player.player2)
+        {
+            for (int i = currentPositionOffCards; i >= newCurrentPostionOfCards; i--)
+            {
+                player2dec.gameObject.GetComponent<addCards>().onEnterReplica(newCards[i]);
+            }
+            currentPositionOffCards -= cardsRequired;
+        }
+    }
     public void StackCards()
     {
         float height = 0.020627f;
@@ -76,8 +106,9 @@ public class GameManager : MonoBehaviour
     public void Distribute()
     {
 
-        for (int i=35;i>=12;i--) {
-            if (i == 35 || i == 31 || i == 27 || i == 23 ) {
+        for (int i = 35; i >= 0; i--) {
+            if (i == 35 || i == 33 || i == 31 || i == 29 || i == 27 || i == 25)
+            {
                 if (!cards[i].GetComponent<moveCard>().isRecieved)
                 {
                     Debug.Log(" first");
@@ -85,9 +116,42 @@ public class GameManager : MonoBehaviour
                     float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
                     if (distance > 0)
                         cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
+                    Debug.Log(cards[i].gameObject.name);
+
                 }
             }
-            else if (i == 34 || i == 30 || i == 26 || i == 22 ) 
+            else if (i == 34 || i == 32 || i == 30 || i == 28 || i == 26 || i == 24)
+            {
+                if (!cards[i].GetComponent<moveCard>().isRecieved)
+                {
+                    Debug.Log(" first");
+                    //cards[i].transform.LookAt(player1.transform);
+                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
+                    if (distance > 0)
+                        cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
+                    Debug.Log(cards[i].gameObject.name);
+                }
+                GameObject trumpCard = cards[23].gameObject;
+                for (int j = 22; j >= 0; j--)
+                {
+                    newCards[j] = cards[j];
+                }
+            }
+            /*
+            if (i == 35 || i == 31 || i == 27 || i == 23 || i == 19 || i == 15)
+            {
+                if (!cards[i].GetComponent<moveCard>().isRecieved)
+                {
+                    Debug.Log(" first");
+                    //cards[i].transform.LookAt(player1.transform);
+                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
+                    if (distance > 0)
+                        cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
+                    Debug.Log(cards[i].gameObject.name);
+
+                }
+            }
+            else if (i == 34 || i == 30 || i == 26 || i == 22 || i == 18 || i == 14)
             {
                 if (!cards[i].GetComponent<moveCard>().isRecieved)
                 {
@@ -98,7 +162,7 @@ public class GameManager : MonoBehaviour
                         cards[i].transform.position += cards[i].transform.right * speed * Time.deltaTime;
                 }
             }
-            else if (i == 33 ||i == 29 || i == 25 || i == 21 )
+            else if (i == 33 || i == 29 || i == 25 || i == 21 || i == 17 || i == 13)
             {
                 if (!cards[i].GetComponent<moveCard>().isRecieved)
                 {
@@ -109,9 +173,10 @@ public class GameManager : MonoBehaviour
                         cards[i].transform.position += -cards[i].transform.right * speed * Time.deltaTime;
                 }
             }
-            if (i == 32 || i == 28 || i == 24 || i == 20)
+            else if (i == 32 || i == 28 || i == 24 || i == 20 || i == 16 || i == 12)
             {
-                if (!cards[i].GetComponent<moveCard>().isRecieved) {
+                if (!cards[i].GetComponent<moveCard>().isRecieved)
+                {
                     Debug.Log(" fourth");
                     //cards[i].transform.LookAt(player4.transform);
                     float distance = Vector3.Distance(cards[i].transform.position, player4.gameObject.transform.position);
@@ -119,6 +184,12 @@ public class GameManager : MonoBehaviour
                         //cards[i].transform.position += cards[i].transform.forward* speed * Time.deltaTime;
                         cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
                 }
+            }*/
+            else {
+                /*if (!cards[i].GetComponent<moveCard>().isRecieved && !isRestakingDone )
+                    ReStackCards();
+                    */
+                    
             }
         }
         //get the distance between the chaser and the target
@@ -129,12 +200,12 @@ public class GameManager : MonoBehaviour
     }
     public void ReStackCards()
     {
+        //cards[i].transform.position = new Vector3(-10.8100004f, 0.98564297f, 20.9899998f);
         float height = 0.020627f;
-        Vector3 pos = new Vector3(7.98999977f, -0.200000003f, -1.47000003f);
+        Vector3 pos = new Vector3(-10.8100004f, 0.98564297f, 20.9899998f);
         float lastDistance = pos.y;
         for (int i = 0; i < cards.Length; i++)
         {
-
             if (i == 0 && !cards[i].gameObject.GetComponent<moveCard>().isRecieved)
             {
                 cards[i].gameObject.transform.position = new Vector3(pos.x, lastDistance + 1, pos.z);
@@ -145,7 +216,6 @@ public class GameManager : MonoBehaviour
                 cards[i].gameObject.transform.position = new Vector3(pos.x, lastDistance, pos.z);
                 lastDistance = pos.y + (height) * i + 1;
             }
-            
         }
     }
 }

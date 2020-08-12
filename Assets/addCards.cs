@@ -10,8 +10,11 @@ public class addCards : MonoBehaviour
     public float x;
     public float y;
     public float z;
-    
-    
+    GameObject[] pl1= new GameObject[36];
+    GameObject[] pl2 = new GameObject[36];
+    GameObject[] pl3= new GameObject[36];
+    GameObject[] pl4= new GameObject[36];
+
     public enum Player { player1, player2, player3, player4 };
     
     public Player p = Player.player1;
@@ -36,7 +39,19 @@ public class addCards : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }*/
-    
+    private void showCards(string player) {
+        if (player == "player1") {
+            for (int i = 0; i < pl1.Length; i++) {
+                Debug.Log(pl1[i].gameObject.name);
+            }
+        } else if (player == "player1")
+        {
+            for (int i = 0; i < pl2.Length; i++)
+            {
+                Debug.Log(pl2[i].gameObject.name);
+            }
+        }
+    }
     public void arangecards(){
         float distance = 1f;
         Vector3 pos = new Vector3(x, y, z);
@@ -50,41 +65,45 @@ public class addCards : MonoBehaviour
                 {
                     myCards[i].gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z);
                     myCards[i].gameObject.SetActive(true);
+                    pl1[i] = myCards[i].gameObject;
                 }
                 else
                 {
                     myCards[i].gameObject.transform.position = new Vector3(lastDistance, lastheight, pos.z);
                     myCards[i].gameObject.SetActive(true);
+                    pl1[i] = myCards[i].gameObject;
                 }
                 lastDistance = pos.x + (distance) * i + 1;
-                lastheight = pos.y + 0.1f;
+                lastheight = lastheight+ 0.020627f;
                 Debug.Log(myCards[i].gameObject.transform.position);
             }
         else if (p == Player.player2)
         {
             lastheight = pos.y;
-            for (int i = 0; i <= myCardsSize; i++)
+            for (int i = 0; i < myCardsSize; i++)
             {
                 if (i == 0)
                 {
                     myCards[i].gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z);
                     myCards[i].gameObject.SetActive(true);
+                    pl2[i] = myCards[i].gameObject;
                 }
                 else
                 {
                     myCards[i].gameObject.transform.position = new Vector3(lastDistance, lastheight, pos.z);
                     myCards[i].gameObject.SetActive(true);
+                    pl2[i] = myCards[i].gameObject;
                 }
                 lastDistance = pos.x + (distance) * i + 1;
-                lastheight = pos.y + 0.1f;
+                lastheight = lastheight + 0.020627f;
                 Debug.Log(myCards[i].gameObject.transform.position);
             }
-        }
+        }/*
         else if (p == Player.player3)
         {
             lastheight = pos.y;
             for (int i = 0; i <= myCardsSize; i++)
-            {
+             {
                 if (i == 0)
                 {
                     myCards[i].gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z);
@@ -98,7 +117,7 @@ public class addCards : MonoBehaviour
                     myCards[i].gameObject.SetActive(true);
                 }
                 lastDistance = pos.x + (distance) * i + 1;
-                lastheight = pos.y + 0.1f;
+                lastheight = lastheight + 0.020627f;
                 Debug.Log(myCards[i].gameObject.transform.position);
             }
         }
@@ -118,11 +137,13 @@ public class addCards : MonoBehaviour
                     myCards[i].gameObject.SetActive(true);
                 }
                 lastDistance = pos.x + (distance) * i + 1;
-                lastheight = pos.y + 0.1f;
+                lastheight = lastheight + 0.020627f;
                 Debug.Log(myCards[i].gameObject.transform.position);
             }
-        }
+        }*/
     }
+    int pl1Size = 0;
+    int pl2Size = 0;
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("OnTriggerEnter------------------------------------");
@@ -133,7 +154,39 @@ public class addCards : MonoBehaviour
             other.gameObject.SetActive(false);
             other.GetComponent<moveCard>().isRecieved = true;
 
-            myCardsSize++;  
+            if (this.gameObject.tag== "Plaayer1") {
+                pl1[pl1Size] = other.gameObject;
+                pl1Size++;
+            }
+            if (this.gameObject.tag == "Plaayer2")
+            {
+                pl2[pl2Size] = other.gameObject;
+                pl2Size++;
+            }
+            myCardsSize++; 
+            arangecards();
+        }
+    }
+    public void onEnterReplica(GameObject other) {
+        Debug.Log("OnTriggerEnter------------------------------------");
+        if (other.gameObject.tag == "Card")
+        {
+            Debug.Log(other.gameObject.name);
+            myCards[myCardsSize] = other.gameObject;
+            other.gameObject.SetActive(false);
+            other.GetComponent<moveCard>().isRecieved = true;
+
+            if (this.gameObject.tag == "Plaayer1")
+            {
+                pl1[pl1Size] = other.gameObject;
+                pl1Size++;
+            }
+            if (this.gameObject.tag == "Plaayer2")
+            {
+                pl2[pl2Size] = other.gameObject;
+                pl2Size++;
+            }
+            myCardsSize++;
             arangecards();
         }
     }
