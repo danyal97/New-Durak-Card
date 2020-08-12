@@ -29,11 +29,6 @@ public class FirebaseScript : MonoBehaviour
             {
                 Debug.Log("Firebase is ready for use.");
                 firebaseReady = true;
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
-                //   app = Firebase.FirebaseApp.DefaultInstance;
-
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
             }
             else
             {
@@ -43,72 +38,14 @@ public class FirebaseScript : MonoBehaviour
                 // Firebase Unity SDK is not safe to use here.
             }
         });
-        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://durakcard-2a29c.firebaseio.com/");
-
-
-        //InitializeFirebase();
-
-
-
-
-
-        // #3
-        // Get the root reference location of the database.
-        //reference = FirebaseDatabase.DefaultInstance.RootReference;
-
-        //string DebugMsg = saveDataToFirebase(002, "Asal Alghamdi ", "Jeddah");
-        //Debug.Log(DebugMsg);
-
-        //_________________________
-
-
-
-
-        //auth.CreateUserWithEmailAndPasswordAsync("fhgfghf2@gmail.com", "fgghfdsffshgfghf").ContinueWith(task => {
-        //    // print message in console
-        //    if (task.IsCanceled)
-        //    {
-        //        Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
-        //        return;
-        //    }
-        //    if (task.IsFaulted)
-        //    {
-        //        Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-        //        return;
-        //    }
-
-
-
-        //    // Firebase user has been created.
-        //    Firebase.Auth.FirebaseUser newUser = task.Result;
-        //    Debug.LogFormat("Firebase user created successfully: {0} ({1})",
-        //        newUser.DisplayName, newUser.UserId);
-        //});
-
-
-        //auth.SignInWithEmailAndPasswordAsync("fhgfghf2@gmail.com", "fgghfdsffshgfghf").ContinueWith(task => {
-        //    if (task.IsCanceled)
-        //    {
-        //        Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
-        //        return;
-        //    }
-        //    if (task.IsFaulted)
-        //    {
-        //        Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-        //        return;
-        //    }
-        //    Firebase.Auth.FirebaseUser newUser = task.Result;
-        //    //Debug.LogFormat("User signed in successfully: {0} ({1})",
-        //    //    newUser.DisplayName, newUser.UserId);
-        //});
     }
 
      void Update()
     {
         if(firebaseReady)
         {
-            
 
+            FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://durakcard-2a29c.firebaseio.com/");
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             //auth.SignOut();
             InitializeFirebase();
@@ -133,6 +70,7 @@ public class FirebaseScript : MonoBehaviour
             bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
             if (!signedIn && user != null)
             {
+
                 Debug.Log("Not Signed in " + user.UserId);
             }
             user = auth.CurrentUser;
@@ -140,7 +78,7 @@ public class FirebaseScript : MonoBehaviour
             {
                 Debug.Log("already Signed in " + user.UserId);
                 //SceneManager.LoadScene("SampleScene");
-                SceneManager.LoadScene("SampleScene");
+                SceneManager.LoadScene("MenuScene");
 
 
                 //auth.SignOut();
