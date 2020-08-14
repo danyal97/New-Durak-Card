@@ -66,6 +66,7 @@ public class moveCard : MonoBehaviour
         place5b.isAvalible = true;
         place6b.position = pos6b;
         place6b.isAvalible = true;
+        playBoard.playboardItems = new List<Place>();
         playBoard.addPlayboardItem(place1a);
         playBoard.addPlayboardItem(place1b);
         playBoard.addPlayboardItem(place2a);
@@ -78,6 +79,7 @@ public class moveCard : MonoBehaviour
         playBoard.addPlayboardItem(place5b);
         playBoard.addPlayboardItem(place6a);
         playBoard.addPlayboardItem(place6b);
+        
 
         // if no target specified, assume the player
         if (target == null)

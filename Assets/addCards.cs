@@ -148,10 +148,13 @@ public class addCards : MonoBehaviour
     }
     int pl1Size = 0;
     int pl2Size = 0;
-    
+    bool isRecievabe =true;
     private void OnTriggerEnter(Collider other)
     {
-        if (!(pl1Size == 6) || !(pl2Size == 6) ) { 
+        if (!isRecievabe)
+        {
+            return;
+        }
         Debug.Log("OnTriggerEnter------------------------------------");
         if (other.gameObject.tag == "Card")
         {
@@ -163,17 +166,24 @@ public class addCards : MonoBehaviour
                         pl1[pl1Size] = other.gameObject;
                         ++pl1Size;
                         Debug.Log("Pl1 SIze " + pl1Size);
+                if (pl1Size >= 6) {
+                    isRecievabe = false;
+                }
             }
             if (this.gameObject.tag == "player2")
             {
                         pl2[pl2Size] = other.gameObject;
                         ++pl2Size;
                         Debug.Log("Pl2 SIze " + pl2Size);
+                        if (pl2Size >= 6)
+                        {
+                            isRecievabe = false;
+                        }
             }
             myCardsSize++;
             arangecards();
         }
-        }
+        
     }
     public void onEnterReplica(GameObject other) {
         Debug.Log("OnTriggerEnter------------------------------------");
@@ -200,11 +210,5 @@ public class addCards : MonoBehaviour
             arangecards();
         }
     }
-    /*void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("OnTriggerEnter");    
-        if (other.gameObject.tag == "Card") {
-            other.gameObject.SetActive(false);
-        }
-    }*/
+    
 }
