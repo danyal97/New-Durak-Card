@@ -158,6 +158,7 @@ public class FirebaseScript:MonoBehaviour
         {
             string userid = this.GetUserIdOfPlayer();
             Debug.Log("User Id Of Player " + userid);
+            bool gameComplete = false;
 
             reference = FirebaseDatabase.DefaultInstance.RootReference;
 
@@ -165,10 +166,6 @@ public class FirebaseScript:MonoBehaviour
             {
                 List<string> data = new List<string>();
                 DataSnapshot snapshot = task.Result;
-
-
-
-
                 if (snapshot.ChildrenCount > 0)
                 {
                     foreach (var i in snapshot.Children)
@@ -176,7 +173,10 @@ public class FirebaseScript:MonoBehaviour
                         if (i.ChildrenCount <= 1)
                         {
                             this.AddPlayerToGame(userid, i.Key);
+                            gameComplete = true;
+                            break;
                         }
+                        
 
                     }
                 }
