@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Firebase.Database;
+using Firebase;
 using System.Threading;
+using Firebase.Auth;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
+    DatabaseReference reference;
+    FirebaseAuth auth;
     public GameObject[] cards = new GameObject[36];
     public GameObject[] newCards = new GameObject[23];
     public enum Player { player1, player2, player3, player4 };
@@ -43,14 +48,23 @@ public class GameManager : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
                 if (Physics.Raycast(ray, out hit, 1000f))
                 {
-                    Debug.Log("Touch enter on " + hit.collider.name);
+                    //Debug.Log("Touch enter on " + hit.collider.name);
                 }
             }
         }
-        
+
         Distribute();
-    
+        
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+
     }
+    //public string saveDataToFirebase(int id, string name, string city) // نفرض اننا حابين نعمل قاعدة بيانات للموظفين كل موظف عنده بيانات مثل ID, Name, City
+    //{
+    //    reference.Child(auth.CurrentUser.UserId).Child("Postion").SetValueAsync();
+    //    reference.Child(id.ToString()).Child("City").SetValueAsync(city);
+    //    return "Save data to firebase Done.";
+    //}
     public void ShuffleCards()
     {
         int num = Random.Range(0, cards.Length);
@@ -111,12 +125,12 @@ public class GameManager : MonoBehaviour
             {
                 if (!cards[i].GetComponent<moveCard>().isRecieved)
                 {
-                    Debug.Log(" first");
+                    //Debug.Log(" first");
                     //cards[i].transform.LookAt(player1.transform);
                     float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
                     if (distance > 0)
                         cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
-                    Debug.Log(cards[i].gameObject.name);
+                    //Debug.Log(cards[i].gameObject.name);
 
                 }
             }
@@ -124,12 +138,12 @@ public class GameManager : MonoBehaviour
             {
                 if (!cards[i].GetComponent<moveCard>().isRecieved)
                 {
-                    Debug.Log(" first");
+                    //Debug.Log(" first");
                     //cards[i].transform.LookAt(player1.transform);
                     float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
                     if (distance > 0)
                         cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
-                    Debug.Log(cards[i].gameObject.name);
+                    //Debug.Log(cards[i].gameObject.name);
                 }
                 GameObject trumpCard = cards[23].gameObject;
                 for (int j = 22; j >= 0; j--)

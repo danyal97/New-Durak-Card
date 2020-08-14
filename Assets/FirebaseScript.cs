@@ -10,13 +10,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FirebaseScript : MonoBehaviour
+public class Game
+{
+    public string userId { get; set; }
+
+       
+
+    public Game()
+    {
+    }
+
+    public Game(string userId)
+    {
+        this.userId = userId;
+        
+    }
+}
+public class FirebaseScript:MonoBehaviour
 {
 
     DatabaseReference reference;
     FirebaseAuth auth;
     Firebase.Auth.FirebaseUser user;
-    
+    bool CurrentUserNot = false;
     public static bool firebaseReady;
     // Start is called before the first frame update
     void Start()
@@ -44,8 +60,8 @@ public class FirebaseScript : MonoBehaviour
     {
         if(firebaseReady)
         {
-
             FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://durakcard-2a29c.firebaseio.com/");
+            reference = FirebaseDatabase.DefaultInstance.RootReference;
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             //auth.SignOut();
             InitializeFirebase();
@@ -76,6 +92,7 @@ public class FirebaseScript : MonoBehaviour
             user = auth.CurrentUser;
             if (signedIn)
             {
+                CurrentUserNot = true;
                 Debug.Log("already Signed in " + user.UserId);
                 //SceneManager.LoadScene("SampleScene");
                 SceneManager.LoadScene("MenuScene");
@@ -120,6 +137,81 @@ public class FirebaseScript : MonoBehaviour
             }
         });
     }
+    public string GetUserIdOfPlayer()
+    {
+        Debug.Log("UserID Called");
+        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        return auth.CurrentUser.UserId.ToString();
+    }
+    public void AddPlayerToGame(string userId,string gameNo)
+    {
+        Debug.Log("Reference Called");
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        Game user = new Game(userId);
+        string json = JsonUtility.ToJson(user);
+        Debug.Log("Json Conversion Called");
+        reference.Child("game").Child(gameNo).SetRawJsonValueAsync(json);
+    }
+    public void AddToGame()
+    {
+        if(!CurrentUserNot)
+        {
+            string userid = this.GetUserIdOfPlayer();
+            Debug.Log("User Id Of Player " + userid);
 
+            reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+            FirebaseDatabase.DefaultInstance.GetReference("game").GetValueAsync().ContinueWith(task =>
+            {
+                List<string> data = new List<string>();
+                DataSnapshot snapshot = task.Result;
+
+
+
+
+                if (snapshot.ChildrenCount > 0)
+                {
+                    foreach (var i in snapshot.Children)
+                    {
+                        if (i.ChildrenCount < 1)
+                        {
+                            this.AddPlayerToGame(userid, i.Key);
+                        }
+
+                    }
+                }
+            });
+        }
+        
+
+
+        //reference
+        //.GetValueAsync().ContinueWith(task =>
+        //{
+        //    Debug.Log("No Successfully Add Player To Game");
+        //    if (task.IsFaulted)
+        //    {
+        //        Debug.Log("No Successfully Add Player To Game");
+        //       // Handle the error...
+        //   }
+        //    else if (task.IsCompleted)
+        //    {
+        //        Dictionary<string, object> data = new Dictionary<string, object>();
+        //        Debug.Log("task Completed");
+        //        DataSnapshot snapshot = task.Result;
+                
+        //        Debug.Log("Data Type Of Snapshot " + snapshot.Child("game").Value);
+                
+
+        //    }
+        //});
+       
+        
+        
+       
+
+
+
+    }
 
 }

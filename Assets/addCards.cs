@@ -1,11 +1,16 @@
-﻿
+﻿using Firebase;
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Unity.Editor;
 
 using UnityEngine;
 using System.Collections;
 
+
 public class addCards : MonoBehaviour
 {
     GameObject [] myCards = new GameObject[6];
+    FirebaseScript user;
     int myCardsSize = 0;
     public float x;
     public float y;
@@ -14,6 +19,7 @@ public class addCards : MonoBehaviour
     GameObject[] pl2 = new GameObject[36];
     GameObject[] pl3= new GameObject[36];
     GameObject[] pl4= new GameObject[36];
+    DatabaseReference reference;
 
     public enum Player { player1, player2, player3, player4 };
     
@@ -24,7 +30,8 @@ public class addCards : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
+        
     }
     // Update is called once per frame
     void Update()
@@ -144,6 +151,8 @@ public class addCards : MonoBehaviour
     }
     int pl1Size = 0;
     int pl2Size = 0;
+
+    
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("OnTriggerEnter------------------------------------");
