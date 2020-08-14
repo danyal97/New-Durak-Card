@@ -143,14 +143,25 @@ public class FirebaseScript:MonoBehaviour
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         return auth.CurrentUser.UserId.ToString();
     }
-    public void AddPlayerToGame(string userId,string gameNo)
+    public void AddPlayerToGame(string userId,string gameNo,long childrenCount)
     {
         Debug.Log("Reference Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         Game user1 = new Game(userId);
         string json = JsonUtility.ToJson(user1);
         Debug.Log("Json Conversion Called");
-        reference.Child("game").Child(gameNo).SetValueAsync(userId);
+        
+        if (childrenCount%2==0)
+        {
+            print("Mod 1 called game no =" + gameNo);
+            reference.Child("game").Child(gameNo).Child("userid").SetValueAsync(userId);
+        }
+        else if (childrenCount % 2 == 1)
+        {
+            print("Mod 2 called game no ="+gameNo);
+
+            reference.Child("game").Child(gameNo).Child("userid1").SetValueAsync(userId);
+        }
     }
     public void AddToGame()
     {
@@ -162,6 +173,7 @@ public class FirebaseScript:MonoBehaviour
         {
             List<string> data = new List<string>();
             DataSnapshot snapshot = task.Result;
+
             if (snapshot.ChildrenCount > 0)
             {
                 foreach (var i in snapshot.Children)
@@ -170,15 +182,13 @@ public class FirebaseScript:MonoBehaviour
                     {
                         //if (userid!=i.Child("userId").Value.ToString())
                         //{
-                        print("First if Condition Called");
-                        this.AddPlayerToGame(userid, i.Key);
+                        print("First if Condition Called key = "+i.Key);
+                        this.AddPlayerToGame(userid, i.Key,i.ChildrenCount);
                         gameComplete = true;
                         break;
                         //}
 
                     }
-
-
                 }
                 string lastKey = "1";
 
@@ -186,16 +196,16 @@ public class FirebaseScript:MonoBehaviour
                 {
                     lastKey = j.Key;
                 }
-                if (gameComplete)
+                if (!gameComplete)
                 {
                     print("First 2nd Condition Called");
-                    this.AddPlayerToGame(userid, lastKey + 1);
+                    this.AddPlayerToGame(userid, (int.Parse(lastKey) + 1).ToString(),0);
                 }
             }
             else
             {
                 print("First else Condition Called");
-                this.AddPlayerToGame(userid, "1");
+                this.AddPlayerToGame(userid, "1",0);
             }
         });
 

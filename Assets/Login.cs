@@ -25,7 +25,7 @@ public class Login : MonoBehaviour
         //if (validation.text == "")
         //{
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-            Debug.Log("Email : " + email.text + " Password : " + pass.text);
+            //Debug.Log("Email : " + email.text + " Password : " + pass.text);
 
             auth.SignInWithEmailAndPasswordAsync(email.text, pass.text).ContinueWith(task =>
             {
