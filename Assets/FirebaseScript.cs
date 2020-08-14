@@ -150,6 +150,8 @@ public class FirebaseScript:MonoBehaviour
         Game user = new Game(userId);
         string json = JsonUtility.ToJson(user);
         Debug.Log("Json Conversion Called");
+        print(user.userId+"game no"+ gameNo);
+       
         reference.Child("game").Child(gameNo).SetRawJsonValueAsync(json);
     }
     public void AddToGame()
@@ -158,8 +160,9 @@ public class FirebaseScript:MonoBehaviour
             string userid = this.GetUserIdOfPlayer();
             Debug.Log("User Id Of Player " + userid);
             bool gameComplete = false;
-
-            reference = FirebaseDatabase.DefaultInstance.RootReference;
+        this.AddPlayerToGame(userid, "1");
+        print("Player Added");
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
 
             FirebaseDatabase.DefaultInstance.GetReference("game").GetValueAsync().ContinueWith(task =>
             {
