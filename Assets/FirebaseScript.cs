@@ -92,7 +92,7 @@ public class FirebaseScript:MonoBehaviour
             user = auth.CurrentUser;
             if (signedIn)
             {
-                CurrentUserNot = true;
+                
                 Debug.Log("already Signed in " + user.UserId);
                 //SceneManager.LoadScene("SampleScene");
                 SceneManager.LoadScene("MenuScene");
@@ -154,8 +154,7 @@ public class FirebaseScript:MonoBehaviour
     }
     public void AddToGame()
     {
-        if(CurrentUserNot)
-        {
+        
             string userid = this.GetUserIdOfPlayer();
             Debug.Log("User Id Of Player " + userid);
             bool gameComplete = false;
@@ -172,9 +171,13 @@ public class FirebaseScript:MonoBehaviour
                     {
                         if (i.ChildrenCount == 1)
                         {
-                            this.AddPlayerToGame(userid, i.Key);
-                            gameComplete = true;
-                            break;
+                            //if (userid!=i.Child("userId").Value.ToString())
+                            //{
+                                this.AddPlayerToGame(userid, i.Key);
+                                gameComplete = true;
+                                break;
+                            //}
+                            
                         }
                         
 
@@ -195,7 +198,7 @@ public class FirebaseScript:MonoBehaviour
                     this.AddPlayerToGame(userid, "1");
                 }
             });
-        }
+        
         
 
 
