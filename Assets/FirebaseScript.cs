@@ -173,7 +173,7 @@ public class FirebaseScript:MonoBehaviour
                 {
                     foreach (var i in snapshot.Children)
                     {
-                        if (i.ChildrenCount < 1)
+                        if (i.ChildrenCount <= 1)
                         {
                             this.AddPlayerToGame(userid, i.Key);
                         }
