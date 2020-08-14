@@ -92,7 +92,7 @@ public class FirebaseScript:MonoBehaviour
             user = auth.CurrentUser;
             if (signedIn)
             {
-                
+                CurrentUserNot = true;
                 Debug.Log("already Signed in " + user.UserId);
                 //SceneManager.LoadScene("SampleScene");
                 SceneManager.LoadScene("MenuScene");
@@ -147,12 +147,10 @@ public class FirebaseScript:MonoBehaviour
     {
         Debug.Log("Reference Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
-        Game user = new Game(userId);
-        string json = JsonUtility.ToJson(user);
+        Game user1 = new Game(userId);
+        string json = JsonUtility.ToJson(user1);
         Debug.Log("Json Conversion Called");
-        print(user.userId+"game no"+ gameNo);
-       
-        reference.Child("game").Child(gameNo).SetRawJsonValueAsync(json);
+        reference.Child("game").Child(gameNo).SetValueAsync(userId);
     }
     public void AddToGame()
     {
@@ -160,49 +158,47 @@ public class FirebaseScript:MonoBehaviour
             string userid = this.GetUserIdOfPlayer();
             Debug.Log("User Id Of Player " + userid);
             bool gameComplete = false;
-        this.AddPlayerToGame(userid, "1");
-        print("Player Added");
-        reference = FirebaseDatabase.DefaultInstance.RootReference;
-
-            FirebaseDatabase.DefaultInstance.GetReference("game").GetValueAsync().ContinueWith(task =>
+        FirebaseDatabase.DefaultInstance.GetReference("game").GetValueAsync().ContinueWith(task =>
+        {
+            List<string> data = new List<string>();
+            DataSnapshot snapshot = task.Result;
+            if (snapshot.ChildrenCount > 0)
             {
-                List<string> data = new List<string>();
-                DataSnapshot snapshot = task.Result;
-                if (snapshot.ChildrenCount > 0)
+                foreach (var i in snapshot.Children)
                 {
-                    foreach (var i in snapshot.Children)
+                    if (i.ChildrenCount == 1)
                     {
-                        if (i.ChildrenCount == 1)
-                        {
-                            //if (userid!=i.Child("userId").Value.ToString())
-                            //{
-                                this.AddPlayerToGame(userid, i.Key);
-                                gameComplete = true;
-                                break;
-                            //}
-                            
-                        }
-                        
+                        //if (userid!=i.Child("userId").Value.ToString())
+                        //{
+                        print("First if Condition Called");
+                        this.AddPlayerToGame(userid, i.Key);
+                        gameComplete = true;
+                        break;
+                        //}
 
                     }
-                    string lastKey="1";
 
-                    foreach (var j in snapshot.Children)
-                    {
-                        lastKey = j.Key;
-                    }
-                    if (gameComplete)
-                    {
-                        this.AddPlayerToGame(userid, lastKey + 1);
-                    }
+
                 }
-                else
+                string lastKey = "1";
+
+                foreach (var j in snapshot.Children)
                 {
-                    this.AddPlayerToGame(userid, "1");
+                    lastKey = j.Key;
                 }
-            });
-        
-        
+                if (gameComplete)
+                {
+                    print("First 2nd Condition Called");
+                    this.AddPlayerToGame(userid, lastKey + 1);
+                }
+            }
+            else
+            {
+                print("First else Condition Called");
+                this.AddPlayerToGame(userid, "1");
+            }
+        });
+
 
 
         //reference
@@ -219,16 +215,16 @@ public class FirebaseScript:MonoBehaviour
         //        Dictionary<string, object> data = new Dictionary<string, object>();
         //        Debug.Log("task Completed");
         //        DataSnapshot snapshot = task.Result;
-                
+
         //        Debug.Log("Data Type Of Snapshot " + snapshot.Child("game").Value);
-                
+
 
         //    }
         //});
-       
-        
-        
-       
+
+
+
+
 
 
 
