@@ -303,6 +303,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4968529300465991231, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.188281
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529300465991231, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.58875
+      objectReference: {fileID: 0}
     - target: {fileID: 4968529300547503461, guid: 24febd529d48c52469a9393c26c45969, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -395,6 +403,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4968529301390965813, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301390965813, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301390965814, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.3830495
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301390965814, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.6848388
+      objectReference: {fileID: 0}
     - target: {fileID: 4968529301603428660, guid: 24febd529d48c52469a9393c26c45969, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -410,6 +434,34 @@ PrefabInstance:
     - target: {fileID: 4968529301603428660, guid: 24febd529d48c52469a9393c26c45969, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301603428661, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.188281
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301603428661, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.58875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301603428661, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -133
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301874062286, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301874062286, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301874062286, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529301874062287, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 469
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4968529302234381863, guid: 24febd529d48c52469a9393c26c45969, type: 3}

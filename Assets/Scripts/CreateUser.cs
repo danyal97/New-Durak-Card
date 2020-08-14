@@ -8,8 +8,9 @@ using Firebase.Auth;
 public class CreateUser : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Text email;
+    
     public Text password;
+    public InputField email;
     public InputField pass;
     public Text validation;
     FirebaseAuth auth;
@@ -40,6 +41,7 @@ public class CreateUser : MonoBehaviour
                 Debug.LogFormat("User signed in successfully: {0} ({1})",
                     newUser.DisplayName, newUser.UserId);
             });
+            
         }
        
 

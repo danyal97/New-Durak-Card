@@ -150,7 +150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4968529300547503465
 RectTransform:
   m_ObjectHideFlags: 0
@@ -704,3 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3b2bdd2fadb7244928912347e52390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  email: {fileID: 0}
+  password: {fileID: 0}
+  pass: {fileID: 0}
+  validation: {fileID: 0}

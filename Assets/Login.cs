@@ -7,8 +7,8 @@ using Firebase.Auth;
 
 public class Login : MonoBehaviour
 {
-    public Text email;
-    public Text password;
+
+    public InputField email;
     public InputField pass;
     public string PreviousEmail;
     public string PreviousPassword;
@@ -56,7 +56,7 @@ public class Login : MonoBehaviour
         {
             validation.text = "Please Enter Valid Email And Password Length \nshould be Greater Than 6";
         }
-        if (password.text.Length < 6)
+        if (pass.text.Length < 6)
         {
             validation.text = "Please Enter Valid Email And Password Length \nshould be Greater Than 6";
         }

@@ -8,6 +8,9 @@ TagManager:
   - Card
   - player1
   - player2
+  - CardComponent
+  - Player1Cards
+  - Player2Cards
   layers:
   - Default
   - TransparentFX
