@@ -148,7 +148,9 @@ class PlayBoard {
     public PlayBoard()
     {}
     public void addPlayboardItem(Place p) {
-        playboardItems.Add(p);
+        Place g = new Place();
+        g = p;
+        playboardItems.Add(g);
     }
 }
 
