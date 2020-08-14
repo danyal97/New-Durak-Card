@@ -45,8 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ef0cd4ca5ae0c41ab4db8e2cfab9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pos1a: {x: 5.62, y: -3.52, z: 6.58}
+  pos1b: {x: 7.34, y: -3.41, z: 6.02}
+  pos2a: {x: 12.08, y: -3.52, z: 6.58}
+  pos2b: {x: 13.8, y: -3.41, z: 6.02}
+  pos3a: {x: 18.22, y: -3.52, z: 6.58}
+  pos3b: {x: 19.939999, y: -3.41, z: 6.02}
+  pos4a: {x: 5.62, y: -3.52, z: -4}
+  pos4b: {x: 7.34, y: -3.41, z: -4.56}
+  pos5a: {x: 12.08, y: -3.52, z: -4}
+  pos5b: {x: 13.8, y: -3.41, z: -4.56}
+  pos6a: {x: 18.22, y: -3.52, z: -4}
+  pos6b: {x: 19.939999, y: -3.41, z: -4.56}
   isOnTop: 0
   isRecieved: 0
+  speed: 20
+  minDist: 0
+  target: {fileID: 0}
 --- !u!65 &967134412389210180
 BoxCollider:
   m_ObjectHideFlags: 0

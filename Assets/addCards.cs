@@ -9,7 +9,7 @@ using Firebase.Unity.Editor;
 
 public class addCards : MonoBehaviour
 {
-    GameObject[] myCards = new GameObject[6];
+    GameObject[] myCards = new GameObject[36];
     int myCardsSize = 0;
     public float x;
     public float y;
@@ -147,9 +147,10 @@ public class addCards : MonoBehaviour
     }
     int pl1Size = 0;
     int pl2Size = 0;
+    
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (!(pl1Size == 6) || !(pl2Size == 6) ) { 
         Debug.Log("OnTriggerEnter------------------------------------");
         if (other.gameObject.tag == "Card")
         {
@@ -157,18 +158,20 @@ public class addCards : MonoBehaviour
             myCards[myCardsSize] = other.gameObject;
             other.gameObject.SetActive(false);
             other.GetComponent<moveCard>().isRecieved = true;
-
             if (this.gameObject.tag== "player1") {
-                pl1[pl1Size] = other.gameObject;
-                pl1Size++;
+                        pl1[pl1Size] = other.gameObject;
+                        ++pl1Size;
+                        Debug.Log("Pl1 SIze " + pl1Size);
             }
             if (this.gameObject.tag == "player2")
             {
-                pl2[pl2Size] = other.gameObject;
-                pl2Size++;
+                        pl2[pl2Size] = other.gameObject;
+                        ++pl2Size;
+                        Debug.Log("Pl2 SIze " + pl2Size);
             }
             myCardsSize++; 
             arangecards();
+        }
         }
     }
     public void onEnterReplica(GameObject other) {
@@ -179,12 +182,11 @@ public class addCards : MonoBehaviour
             myCards[myCardsSize] = other.gameObject;
             other.gameObject.SetActive(false);
             other.GetComponent<moveCard>().isRecieved = true;
-
             if (this.gameObject.tag == "player1")
             {
-                
                 pl1[pl1Size] = other.gameObject;
                 other.gameObject.tag = "Player1Cards";
+                Debug.Log("" + other.gameObject.tag);
                 pl1Size++;
             }
             if (this.gameObject.tag == "player2")
