@@ -119,8 +119,6 @@ public class moveCard : MonoBehaviour
                 }
             }
         }
-        
-        
     }
     public void MoveTheCardTowardSelectedCard() {
         if (target == null)
@@ -152,6 +150,5 @@ class PlayBoard {
     public void addPlayboardItem(Place p) {
         playboardItems.Add(p);
     }
-    
 }
 
