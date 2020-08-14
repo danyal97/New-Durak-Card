@@ -170,7 +170,7 @@ public class FirebaseScript:MonoBehaviour
                 {
                     foreach (var i in snapshot.Children)
                     {
-                        if (i.ChildrenCount <= 1)
+                        if (i.ChildrenCount == 1)
                         {
                             this.AddPlayerToGame(userid, i.Key);
                             gameComplete = true;
@@ -179,6 +179,20 @@ public class FirebaseScript:MonoBehaviour
                         
 
                     }
+                    string lastKey="1";
+
+                    foreach (var j in snapshot.Children)
+                    {
+                        lastKey = j.Key;
+                    }
+                    if (gameComplete)
+                    {
+                        this.AddPlayerToGame(userid, lastKey + 1);
+                    }
+                }
+                else
+                {
+                    this.AddPlayerToGame(userid, "1");
                 }
             });
         }
