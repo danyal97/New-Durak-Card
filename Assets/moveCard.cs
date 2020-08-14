@@ -79,8 +79,6 @@ public class moveCard : MonoBehaviour
         playBoard.addPlayboardItem(place5b);
         playBoard.addPlayboardItem(place6a);
         playBoard.addPlayboardItem(place6b);
-        
-
         // if no target specified, assume the player
         if (target == null)
         {
@@ -92,10 +90,8 @@ public class moveCard : MonoBehaviour
     }
     void Update()
     {
-        
         if (Input.GetMouseButtonDown(0))
         {
-        
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
             if (Physics.Raycast(ray, out hitInfo))
@@ -150,9 +146,8 @@ class PlayBoard {
     public PlayBoard()
     {}
     public void addPlayboardItem(Place p) {
-        Place g = new Place();
-        g = p;
-        playboardItems.Add(g);
+        
+        playboardItems.Add(p);
     }
 }
 

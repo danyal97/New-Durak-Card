@@ -14,17 +14,19 @@ public class addCards : MonoBehaviour
     public float x;
     public float y;
     public float z;
-    GameObject[] pl1 = new GameObject[36];
-    GameObject[] pl2 = new GameObject[36];
+    public GameObject[] pl1 = new GameObject[36];
+    public GameObject[] pl2 = new GameObject[36];
     GameObject[] pl3 = new GameObject[36];
     GameObject[] pl4 = new GameObject[36];
     DatabaseReference reference;
     float time;
     public enum Player { player1, player2, player3, player4 };
-
+    public int pl1Size = 0;
+    public int pl2Size = 0;
     public Player p = Player.player1;
 
     public void RotateMyCards() {
+        
         Quaternion vector = new Quaternion(0, 0.707106769f, -0.707106769f, 0);
         float speed = 5f;
         //Vector3(90, 180, 0)
@@ -56,9 +58,8 @@ public class addCards : MonoBehaviour
         }
     }
     public void arangecards(){
-        float distance = 1f;
+        float distance = 3f;
         Vector3 pos = new Vector3(x, y, z);
-        
         float lastDistance = pos.x;
         float lastheight = pos.y;
         if (p == Player.player1)
@@ -146,9 +147,8 @@ public class addCards : MonoBehaviour
             }
         }*/
     }
-    int pl1Size = 0;
-    int pl2Size = 0;
-    bool isRecievabe =true;
+    
+    public bool isRecievabe =true;
     private void OnTriggerEnter(Collider other)
     {
         if (!isRecievabe)
@@ -183,7 +183,6 @@ public class addCards : MonoBehaviour
             myCardsSize++;
             arangecards();
         }
-        
     }
     public void onEnterReplica(GameObject other) {
         Debug.Log("OnTriggerEnter------------------------------------");
@@ -210,5 +209,4 @@ public class addCards : MonoBehaviour
             arangecards();
         }
     }
-    
 }
