@@ -1,6 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Threading;
+
+using Firebase;
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Unity.Editor;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
@@ -9,7 +15,7 @@ public class GameManager : MonoBehaviour
     public enum Player { player1, player2, player3, player4 };
     public GameObject player1dec;
     public GameObject player2dec;
-
+    bool doingDistribution = true;
     public Player p = Player.player1;
 
     private Vector3 topPosition;
@@ -20,36 +26,18 @@ public class GameManager : MonoBehaviour
     bool isRestakingDone = false;
     int currentPositionOffCards = 22;
     
-
-
     // Start is called before the first frame update
     private void Start()
     {
-        this.gameObject.transform.position =new  Vector3(15.3800001f, -1.10000002f, 20.1900005f);
+        //this.gameObject.transform.position =new  Vector3(15.3800001f, -1.10000002f, 20.1900005f);
         ShuffleCards();
-
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < Input.touchCount; ++i)
-        {
-            if (Input.GetTouch(i).phase == TouchPhase.Began)
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
-                if (Physics.Raycast(ray, out hit, 1000f))
-                {
-                    Debug.Log("Touch enter on " + hit.collider.name);
-                }
-            }
-        }
         
         Distribute();
-    
     }
     public void ShuffleCards()
     {
@@ -91,7 +79,6 @@ public class GameManager : MonoBehaviour
         float lastDistance = pos.y;
         for (int i = 0; i < cards.Length; i++)
         {
-    
             if (i == 0)
             {
                 cards[i].gameObject.transform.position = new Vector3(pos.x, lastDistance + 1, pos.z);
@@ -189,7 +176,6 @@ public class GameManager : MonoBehaviour
                 /*if (!cards[i].GetComponent<moveCard>().isRecieved && !isRestakingDone )
                     ReStackCards();
                     */
-                    
             }
         }
         //get the distance between the chaser and the target
