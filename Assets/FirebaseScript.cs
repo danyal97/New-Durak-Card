@@ -154,7 +154,7 @@ public class FirebaseScript:MonoBehaviour
     }
     public void AddToGame()
     {
-        if(!CurrentUserNot)
+        if(CurrentUserNot)
         {
             string userid = this.GetUserIdOfPlayer();
             Debug.Log("User Id Of Player " + userid);

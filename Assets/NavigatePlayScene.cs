@@ -10,7 +10,6 @@ public class NavigatePlayScene : MonoBehaviour
     {
         FirebaseScript addPlayerToGame = new FirebaseScript();
         addPlayerToGame.AddToGame();
-
         SceneManager.LoadScene("PlayScene");
     }
 }
