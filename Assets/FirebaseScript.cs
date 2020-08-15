@@ -141,12 +141,12 @@ public class FirebaseScript:MonoBehaviour
             }
         });
     }
-    public void AddCoordinatesToDatabse(string cardName,string positionx, string positiony, string positionz)
+    public void AddCoordinatesToDatabse(string playerNo1,string cardName,string positionx, string positiony, string positionz)
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
-        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo.ToString()).Child(cardName).Child("positionX").SetValueAsync(positionx);
-        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo.ToString()).Child(cardName).Child("positionY").SetValueAsync(positiony);
-        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo.ToString()).Child(cardName).Child("positionZ").SetValueAsync(positionz);
+        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo1).Child(cardName).Child("positionX").SetValueAsync(positionx);
+        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo1).Child(cardName).Child("positionY").SetValueAsync(positiony);
+        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo1).Child(cardName).Child("positionZ").SetValueAsync(positionz);
     }
     public string GetUserIdOfPlayer()
     {
