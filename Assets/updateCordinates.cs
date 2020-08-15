@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class updateCordinates : MonoBehaviour
 {
+    [SerializeField]
+    private GameManager gameManager;
     GameObject p1;
     GameObject p2;
     GameObject[] Player1Cards; 
@@ -14,8 +16,8 @@ public class updateCordinates : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        p1 = GameManager.gameManager.player1Reciever.gameObject;
-        p2 = GameManager.gameManager.player2Reciever.gameObject;
+        p1 = gameManager.player1Reciever.gameObject;
+        p2 = gameManager.player2Reciever.gameObject;
         Player1Cards = p1.GetComponent<addCards>().pl1;
         Player2Cards = p2.GetComponent<addCards>().pl2;
         player1CardSize = p1.GetComponent<addCards>().pl1Size;

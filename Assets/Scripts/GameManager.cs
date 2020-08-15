@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
     public enum Player { player1, player2, player3, player4 }
     public GameObject player1Reciever;
     public GameObject player2Reciever;
-    bool doingDistribution = true;
+    public bool isDistrbuting = false;
     public Player p = Player.player1;
     public Vector3 pos = new Vector3(7.98999977f, -0.200000003f, -1.47000003f);
     private Vector3 topPosition;
@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviour {
     void Update () {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        Distribute();
+        if (isDistrbuting)
+        {
+            Distribute();
+        }
         if (!isStacked) {
             StackCards();
             isStacked = !isStacked;
