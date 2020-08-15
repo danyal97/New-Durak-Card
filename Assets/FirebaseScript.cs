@@ -143,10 +143,98 @@ public class FirebaseScript:MonoBehaviour
     }
     public void AddCoordinatesToDatabse(string playerNo1,string cardName,string positionx, string positiony, string positionz)
     {
+        print("Add Coordinates To database Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
-        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo1).Child(cardName).Child("positionX").SetValueAsync(positionx);
-        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo1).Child(cardName).Child("positionY").SetValueAsync(positiony);
-        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo1).Child(cardName).Child("positionZ").SetValueAsync(positionz);
+        string userid = this.GetUserIdOfPlayer();
+        Debug.Log("User Id Of Player " + userid);
+        reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionX").SetValueAsync(positionx);
+        reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionY").SetValueAsync(positiony);
+        reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionZ").SetValueAsync(positionz);
+    }
+    public void RetreiveCoordinateFromDatabse(string playerNo1, string cardName, string positionx, string positiony, string positionz)
+    {
+        print("Retreive Coordinates From database Called");
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        string userid = this.GetUserIdOfPlayer();
+        Debug.Log("User Id Of Player " + userid);
+        FirebaseDatabase.DefaultInstance.GetReference("game2").GetValueAsync().ContinueWith(task =>
+        {
+            List<string> data = new List<string>();
+            DataSnapshot snapshot = task.Result;
+            bool userfound = false;
+
+
+            
+            if (snapshot.ChildrenCount > 0)
+            {
+                // Game No ke andar gaya
+                foreach (var gamNo in snapshot.Children)
+                {
+                   foreach(var useid in gamNo.Children )
+                    {
+                        // This Is Player1 Data
+                        if (useid.Key==userid)
+                        {
+                            userfound = true;
+                            foreach (var cardNam in useid.Children)
+                            {
+                                // Gives Card Name
+                                foreach(var pos in cardNam.Children)
+                                {
+                                    if(pos.Key== "positionX")
+                                    {
+
+                                    }
+                                    else if (pos.Key == "positionY")
+                                    {
+
+                                    }
+                                    else if (pos.Key == "positionZ")
+                                    {
+
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // This Is Player2 Data
+                            foreach (var cardNam in useid.Children)
+                            {
+                                // Gives Card Name
+                                foreach (var pos in cardNam.Children)
+                                {
+                                    if (pos.Key == "positionX")
+                                    {
+
+                                    }
+                                    else if (pos.Key == "positionY")
+                                    {
+
+                                    }
+                                    else if (pos.Key == "positionZ")
+                                    {
+
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+                   if (userfound)
+                    {
+                        break;
+                    }
+                }
+               
+            }
+        });
+
+
+
+
     }
     public string GetUserIdOfPlayer()
     {
