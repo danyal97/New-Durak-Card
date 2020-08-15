@@ -34,6 +34,10 @@ public class FirebaseScript:MonoBehaviour
     Firebase.Auth.FirebaseUser user;
     bool CurrentUserNot = false;
     public static bool firebaseReady;
+    public int playerNo;
+    public string gameNoToBeAdded;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -137,6 +141,13 @@ public class FirebaseScript:MonoBehaviour
             }
         });
     }
+    public void AddCoordinatesToDatabse(string cardName,string positionx, string positiony, string positionz)
+    {
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo.ToString()).Child(cardName).Child("positionX").SetValueAsync(positionx);
+        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo.ToString()).Child(cardName).Child("positionY").SetValueAsync(positiony);
+        reference.Child("game").Child(gameNoToBeAdded).Child(playerNo.ToString()).Child(cardName).Child("positionZ").SetValueAsync(positionz);
+    }
     public string GetUserIdOfPlayer()
     {
         Debug.Log("UserID Called");
@@ -154,12 +165,15 @@ public class FirebaseScript:MonoBehaviour
         if (childrenCount%2==0)
         {
             print("Mod 1 called game no =" + gameNo);
+            playerNo = 1;
+            gameNoToBeAdded = gameNo;
             reference.Child("game").Child(gameNo).Child("userid").SetValueAsync(userId);
         }
         else if (childrenCount % 2 == 1)
         {
             print("Mod 2 called game no ="+gameNo);
-
+            playerNo = 2;
+            gameNoToBeAdded = gameNo;
             reference.Child("game").Child(gameNo).Child("userid1").SetValueAsync(userId);
         }
     }
