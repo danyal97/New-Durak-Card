@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnCollision : MonoBehaviour
+public class onCollision : MonoBehaviour
 {
     public GameObject card = null;  
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class OnCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player1Cards") {
+        if (other.gameObject.tag == "Player1Cards" || other.gameObject.tag == "Player2Cards") {
             Debug.Log("Colided");
             card = other.gameObject;
         }

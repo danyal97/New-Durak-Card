@@ -9,8 +9,10 @@ using Firebase.Unity.Editor;
 
 public class addCards : MonoBehaviour
 {
+    [SerializeField]
+    GameManager gameManger;
     GameObject[] myCards = new GameObject[36];
-    int myCardsSize = 0;
+    public int myCardsSize = 0;
     public float x;
     public float y;
     public float z;
@@ -172,7 +174,6 @@ public class addCards : MonoBehaviour
             if (other.gameObject.tag == "Card")
             {
                 Debug.Log(other.gameObject.name);
-                
                 if (p== Player.player1)
                 {
                     myCards[myCardsSize] = other.gameObject;
@@ -190,8 +191,14 @@ public class addCards : MonoBehaviour
                     {
                         isRecievabe = false;
                     }
+                    if (myCardsSize == 6)
+                    {
+                        Debug.Log("condition in triger start");
+                        gameManger.SetTrumpCard();
+                        Debug.Log("condition in triger end-------------------------");
+                    }
                 }
-                if (p == Player.player2)
+                else if (p == Player.player2)
                 {
                     myCards[myCardsSize] = other.gameObject;
                     other.gameObject.SetActive(false);
@@ -207,6 +214,7 @@ public class addCards : MonoBehaviour
                         isRecievabe = false;
                     }
                 }
+                
                 /*++myCardsSize;
                 arangecards();*/
             }

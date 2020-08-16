@@ -442,6 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f16b7d998383cb4091a4e3fc90241b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNo: 0
+  gameNoToBeAdded: 
 --- !u!4 &245567870
 Transform:
   m_ObjectHideFlags: 0
@@ -1080,11 +1082,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c90c5222a1361458f89498e361f041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  email: {fileID: 0}
+  email: {fileID: 1683791271}
   pass: {fileID: 1916884679}
   PreviousEmail: 
   PreviousPassword: 
-  validation: {fileID: 0}
+  validation: {fileID: 150937480}
 --- !u!114 &1621703624
 MonoBehaviour:
   m_ObjectHideFlags: 0

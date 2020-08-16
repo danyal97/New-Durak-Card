@@ -39,6 +39,7 @@ public class moveCard : MonoBehaviour
     Touch touch;
     float speedModifier = 0.0011f;
     GameObject selected;
+    public bool isTouchable = true;
     void Start()
     {
         place1a.position = pos1a;
@@ -90,31 +91,38 @@ public class moveCard : MonoBehaviour
     }   
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isTouchable== true)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
             if (Physics.Raycast(ray, out hitInfo))
             {
-                if (hitInfo.collider.gameObject.tag== "Player1Cards") {
+                if (hitInfo.collider.gameObject.tag == "Player1Cards" )
+                {
                     GameObject gb = hitInfo.collider.gameObject;
                     selected = gb;
-                    
+
                 }
+                
             }
         }
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 )
             {
-            if (selected)
+            if (selected != null && isTouchable == true)
             {
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Moved)
                 {
+                    Debug.Log(selected);
                     selected.transform.position = new Vector3(selected.transform.position.x + touch.deltaPosition.x * speedModifier,
-                                selected.transform.position.y,
-                                selected.transform.position.z + touch.deltaPosition.y * speedModifier
+                    selected.transform.position.y,
+                    selected.transform.position.z + touch.deltaPosition.y * speedModifier
                                 );
                 }
+            }
+            else
+            {
+                selected = null;
             }
         }
     }

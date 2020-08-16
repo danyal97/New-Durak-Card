@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
     DatabaseReference reference;
     FirebaseAuth auth;
     public GameObject[] cards = new GameObject[36];
-    public GameObject[] newCards = new GameObject[23];
+    public GameObject[] newCards = new GameObject[24];
     public enum Player { player1, player2, player3, player4 }
     public GameObject player1Reciever;
     public GameObject player2Reciever;
@@ -34,7 +34,9 @@ public class GameManager : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start() {
-        //this.gameObject.transform.position =new  Vector3(15.3800001f, -1.10000002f, 20.1900005f);
+        gameManager = this;
+        newCards = new GameObject[25];
+    //this.gameObject.transform.position =new  Vector3(15.3800001f, -1.10000002f, 20.1900005f);
         ShuffleCards();
     }
     // Update is called once per frame
@@ -96,33 +98,6 @@ public class GameManager : MonoBehaviour {
                     if (distance > 0)
                         cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
                     //Debug.Log(cards[i].gameObject.name);
-
-                    //if (i == 25)
-                    Debug.Log("moiz");
-                    SetTrumpCard();
-                        
-                        StackCards();
-                        
-                    cards[0].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
-                    
-                        //Debug.Log("Quratation " + cards[0].gameObject.transform.rotation);
-                        if (cards[0].name.Contains("C"))
-                        {
-                            trumpcardString = "C";
-                        }
-                        if (cards[0].name.Contains("S"))
-                        {
-                            trumpcardString = "S";
-                        }
-                        if (cards[0].name.Contains("D"))
-                        {
-                            trumpcardString = "D";
-                        }
-                        if (cards[0].name.Contains("H"))
-                        {
-                            trumpcardString = "H";
-                        }
-                    //}
                 }
             }
             else if (i == 34 || i == 32 || i == 30 || i == 28 || i == 26 || i == 24)
@@ -191,16 +166,42 @@ public class GameManager : MonoBehaviour {
 
         }
     }
-
     public void SetTrumpCard(){
-            GameObject temp = cards[23].gameObject;
+
+        Debug.Log("start");
+
+        GameObject temp = cards[23].gameObject;
             cards[23] = cards[0].gameObject;
             cards[0] = temp;
             trumpCard = cards[0].gameObject;
             for (int j = 23; j >= 1; j--)
             {
+                Debug.Log("j"  +j);
+                ///newCards[j] = cards[j];
                 newCards[j] = cards[j];
+                Debug.Log(""+ newCards[j]);
             }
+        Debug.Log("end");
+        StackCards();
+        cards[0].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
+
+        //Debug.Log("Quratation " + cards[0].gameObject.transform.rotation);
+        if (cards[0].name.Contains("C"))
+        {
+            trumpcardString = "C";
+        }
+        if (cards[0].name.Contains("S"))
+        {
+            trumpcardString = "S";
+        }
+        if (cards[0].name.Contains("D"))
+        {
+            trumpcardString = "D";
+        }
+        if (cards[0].name.Contains("H"))
+        {
+            trumpcardString = "H";
+        }
     }
     public void StackCards()
     {
