@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Threading;
-using Firebase;
+
 using Firebase;
 using Firebase.Auth;
-using Firebase.Auth;
+
 using Firebase.Database;
-using Firebase.Database;
+
 using Firebase.Unity.Editor;
 using UnityEngine;
 

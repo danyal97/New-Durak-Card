@@ -143,7 +143,7 @@ public class FirebaseScript:MonoBehaviour
     }
     public void AddCoordinatesToDatabse(string playerNo1,string cardName,string positionx, string positiony, string positionz)
     {
-        print("Add Coordinates To database Called");
+        //print("Add Coordinates To database Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         string userid = this.GetUserIdOfPlayer();
         Debug.Log("User Id Of Player " + userid);
@@ -153,7 +153,7 @@ public class FirebaseScript:MonoBehaviour
     }
     public void RetreiveCoordinateFromDatabse(string playerNo1, string cardName, string positionx, string positiony, string positionz)
     {
-        print("Retreive Coordinates From database Called");
+        //print("Retreive Coordinates From database Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
 
         string userid = this.GetUserIdOfPlayer();
@@ -253,14 +253,14 @@ public class FirebaseScript:MonoBehaviour
         
         if (childrenCount%2==0)
         {
-            print("Mod 1 called game no =" + gameNo);
+            //print("Mod 1 called game no =" + gameNo);
             playerNo = 1;
             gameNoToBeAdded = gameNo;
             reference.Child("game").Child(gameNo).Child("userid").SetValueAsync(userId);
         }
         else if (childrenCount % 2 == 1)
         {
-            print("Mod 2 called game no ="+gameNo);
+           // print("Mod 2 called game no ="+gameNo);
             playerNo = 2;
             gameNoToBeAdded = gameNo;
             reference.Child("game").Child(gameNo).Child("userid1").SetValueAsync(userId);
@@ -285,7 +285,7 @@ public class FirebaseScript:MonoBehaviour
                     {
                         //if (userid!=i.Child("userId").Value.ToString())
                         //{
-                        print("First if Condition Called key = "+i.Key);
+                        //print("First if Condition Called key = "+i.Key);
                         this.AddPlayerToGame(userid, i.Key,i.ChildrenCount);
                         gameComplete = true;
                         break;
@@ -301,13 +301,13 @@ public class FirebaseScript:MonoBehaviour
                 }
                 if (!gameComplete)
                 {
-                    print("First 2nd Condition Called");
+                    //print("First 2nd Condition Called");
                     this.AddPlayerToGame(userid, (int.Parse(lastKey) + 1).ToString(),0);
                 }
             }
             else
             {
-                print("First else Condition Called");
+                //print("First else Condition Called");
                 this.AddPlayerToGame(userid, "1",0);
             }
         });

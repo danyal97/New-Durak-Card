@@ -29,6 +29,7 @@ public class updateCordinates : MonoBehaviour
         Player2Cards = p2.GetComponent<addCards>().pl2;
         player1CardSize = p1.GetComponent<addCards>().pl1Size;
         player2CardSize = p2.GetComponent<addCards>().pl2Size;
+        playerCardInfo = new FirebaseScript();
         for (int i = 0; i < player1CardSize; i++)
         {
             string posx = Player1Cards[i].gameObject.transform.position.x.ToString();
