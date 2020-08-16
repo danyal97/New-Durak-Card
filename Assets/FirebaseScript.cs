@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+
 public class Game
 {
     public string userId { get; set; }
@@ -36,13 +38,14 @@ public class FirebaseScript:MonoBehaviour
     public static bool firebaseReady;
     public int playerNo;
     public string gameNoToBeAdded;
+    FirebaseScript2 gameNoInit; 
 
 
     // Start is called before the first frame update
     void Start()
     {
 
-
+        gameNoInit = new FirebaseScript2();
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
@@ -147,6 +150,8 @@ public class FirebaseScript:MonoBehaviour
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         string userid = this.GetUserIdOfPlayer();
         Debug.Log("User Id Of Player " + userid);
+
+        
         reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionX").SetValueAsync(positionx);
         reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionY").SetValueAsync(positiony);
         reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionZ").SetValueAsync(positionz);
@@ -256,6 +261,7 @@ public class FirebaseScript:MonoBehaviour
             //print("Mod 1 called game no =" + gameNo);
             playerNo = 1;
             gameNoToBeAdded = gameNo;
+            gameNoInit.gameFromFirebase = gameNo;
             reference.Child("game").Child(gameNo).Child("userid").SetValueAsync(userId);
         }
         else if (childrenCount % 2 == 1)
@@ -263,6 +269,7 @@ public class FirebaseScript:MonoBehaviour
            // print("Mod 2 called game no ="+gameNo);
             playerNo = 2;
             gameNoToBeAdded = gameNo;
+            gameNoInit.gameFromFirebase = gameNo;
             reference.Child("game").Child(gameNo).Child("userid1").SetValueAsync(userId);
         }
     }
@@ -286,6 +293,7 @@ public class FirebaseScript:MonoBehaviour
                         //if (userid!=i.Child("userId").Value.ToString())
                         //{
                         //print("First if Condition Called key = "+i.Key);
+                        gameNoToBeAdded = i.Key;
                         this.AddPlayerToGame(userid, i.Key,i.ChildrenCount);
                         gameComplete = true;
                         break;
@@ -302,13 +310,15 @@ public class FirebaseScript:MonoBehaviour
                 if (!gameComplete)
                 {
                     //print("First 2nd Condition Called");
+                    gameNoToBeAdded = (int.Parse(lastKey) + 1).ToString();
                     this.AddPlayerToGame(userid, (int.Parse(lastKey) + 1).ToString(),0);
                 }
             }
             else
             {
                 //print("First else Condition Called");
-                this.AddPlayerToGame(userid, "1",0);
+                gameNoToBeAdded = "1";
+               this.AddPlayerToGame(userid, "1",0);
             }
         });
 
@@ -346,7 +356,7 @@ public class FirebaseScript:MonoBehaviour
 }
 
 
-public class FirebaseScript2
+public class FirebaseScript2 
 {
 
     DatabaseReference reference;
@@ -356,6 +366,8 @@ public class FirebaseScript2
     public static bool firebaseReady;
     public int playerNo;
     public string gameNoToBeAdded;
+    public string gameFromFirebase { get; set; }
+   
 
 
     // Start is called before the first frame update
@@ -464,12 +476,15 @@ public class FirebaseScript2
     public void AddCoordinatesToDatabse(string playerNo1, string cardName, string positionx, string positiony, string positionz)
     {
         //print("Add Coordinates To database Called");
+        
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         string userid = this.GetUserIdOfPlayer();
         Debug.Log("User Id Of Player " + userid);
-        reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionX").SetValueAsync(positionx);
-        reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionY").SetValueAsync(positiony);
-        reference.Child("game2").Child(gameNoToBeAdded).Child(userid).Child(cardName).Child("positionZ").SetValueAsync(positionz);
+       
+        Debug.Log(userid+"game to be added"+ this.RetreiveGameNO() + "card name"+cardName+"postion "+positionx);
+        reference.Child("game2").Child(this.RetreiveGameNO()).Child(userid).Child(cardName).Child("positionX").SetValueAsync(positionx);
+        reference.Child("game2").Child(this.RetreiveGameNO()).Child(userid).Child(cardName).Child("positionY").SetValueAsync(positiony);
+        reference.Child("game2").Child(this.RetreiveGameNO()).Child(userid).Child(cardName).Child("positionZ").SetValueAsync(positionz);
     }
     public void RetreiveCoordinateFromDatabse(string playerNo1, string cardName, string positionx, string positiony, string positionz)
     {
@@ -576,6 +591,7 @@ public class FirebaseScript2
             //print("Mod 1 called game no =" + gameNo);
             playerNo = 1;
             gameNoToBeAdded = gameNo;
+            Debug.Log("Game No TO Be Added" + gameNoToBeAdded);
             reference.Child("game").Child(gameNo).Child("userid").SetValueAsync(userId);
         }
         else if (childrenCount % 2 == 1)
@@ -583,6 +599,7 @@ public class FirebaseScript2
             // print("Mod 2 called game no ="+gameNo);
             playerNo = 2;
             gameNoToBeAdded = gameNo;
+            Debug.Log("Game No TO Be Added" + gameNoToBeAdded);
             reference.Child("game").Child(gameNo).Child("userid1").SetValueAsync(userId);
         }
     }
@@ -634,32 +651,73 @@ public class FirebaseScript2
 
 
 
-        //reference
-        //.GetValueAsync().ContinueWith(task =>
-        //{
-        //    Debug.Log("No Successfully Add Player To Game");
-        //    if (task.IsFaulted)
-        //    {
-        //        Debug.Log("No Successfully Add Player To Game");
-        //       // Handle the error...
-        //   }
-        //    else if (task.IsCompleted)
-        //    {
-        //        Dictionary<string, object> data = new Dictionary<string, object>();
-        //        Debug.Log("task Completed");
-        //        DataSnapshot snapshot = task.Result;
 
-        //        Debug.Log("Data Type Of Snapshot " + snapshot.Child("game").Value);
-
-
-        //    }
-        //});
+    }
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+    
+    public string RetreiveGameNO()
+    {
+
+        string userid = this.GetUserIdOfPlayer();
+        Debug.Log("User Id Of Player " + userid);
+        bool gameComplete = false;
+        string gameNumber="";
+        FirebaseDatabase.DefaultInstance.GetReference("game").GetValueAsync().ContinueWith(task =>
+        {
+            List<string> data = new List<string>();
+            DataSnapshot snapshot = task.Result;
+
+            if (snapshot.ChildrenCount > 0)
+            {
+                foreach (var i in snapshot.Children)
+                {
+                    if (i.ChildrenCount == 1)
+                    {
+                        //if (userid!=i.Child("userId").Value.ToString())
+                        //{
+                        //print("First if Condition Called key = "+i.Key);
+                        gameNumber= i.Key;
+                        gameComplete = true;
+                        break;
+                        //}
+
+                    }
+                }
+                string lastKey = "1";
+
+                foreach (var j in snapshot.Children)
+                {
+                    lastKey = j.Key;
+                }
+                if (!gameComplete)
+                {
+                    //print("First 2nd Condition Called");
+                    gameNumber = (int.Parse(lastKey) + 1).ToString();
+                }
+            }
+            else
+            {
+                //print("First else Condition Called");
+                gameNumber = "1";
+            }
+        });
+
+
+        return gameNumber;
 
     }
 
