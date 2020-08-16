@@ -87,7 +87,7 @@ public class moveCard : MonoBehaviour
                 target = GameObject.FindWithTag("Player").GetComponent<Transform>();
             }
         }
-    }
+    }   
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -96,7 +96,7 @@ public class moveCard : MonoBehaviour
             RaycastHit hitInfo;
             if (Physics.Raycast(ray, out hitInfo))
             {
-                if (hitInfo.collider.gameObject.tag== "Card") {
+                if (hitInfo.collider.gameObject.tag== "Player1Cards") {
                     GameObject gb = hitInfo.collider.gameObject;
                     selected = gb;
                     

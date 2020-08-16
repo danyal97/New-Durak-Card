@@ -62,7 +62,7 @@ public class addCards : MonoBehaviour
         Vector3 pos = new Vector3(x, y, z);
         float lastDistance = 0;
         float lastheight = 0;
-
+        Vector3 currentEulerAngles;
         if (p == Player.player1)
         {
             lastDistance = pos.x;
@@ -71,14 +71,18 @@ public class addCards : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    myCards[i].gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z);
+                    myCards[i].gameObject.transform.position = new Vector3(pos.x, pos.y, -19.6f);
+                    myCards[i].gameObject.transform.rotation=  new Quaternion(90,0,0,90);
+                    //myCards[i].transform.eulerAngles = currentEulerAngles;
                     myCards[i].gameObject.SetActive(true);
                     pl1[i] = myCards[i].gameObject;
                 }
                 else
                 {
                     Debug.Log("Positional Vactor  " + myCards[i].gameObject.transform.position);
-                    myCards[i].gameObject.transform.position = new Vector3(lastDistance, lastheight, pos.z);
+                    
+                    myCards[i].gameObject.transform.position = new Vector3(lastDistance, lastheight, -19.6f);
+                    myCards[i].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
                     myCards[i].gameObject.SetActive(true);
                     pl1[i] = myCards[i].gameObject;
                 }
@@ -172,6 +176,8 @@ public class addCards : MonoBehaviour
                 if (p== Player.player1)
                 {
                     myCards[myCardsSize] = other.gameObject;
+                    other.gameObject.tag = "Player1Cards";
+                    
                     other.gameObject.SetActive(false);
                     other.GetComponent<moveCard>().isRecieved = true;
                     pl1[pl1Size] = other.gameObject;
@@ -179,6 +185,7 @@ public class addCards : MonoBehaviour
                     Debug.Log("Pl1 SIze " + pl1Size);
                     ++myCardsSize;
                     arangecards();
+
                     if (pl1Size >= 6)
                     {
                         isRecievabe = false;
@@ -188,6 +195,7 @@ public class addCards : MonoBehaviour
                 {
                     myCards[myCardsSize] = other.gameObject;
                     other.gameObject.SetActive(false);
+                    other.gameObject.tag = "Player2Cards";
                     other.GetComponent<moveCard>().isRecieved = true;
                     pl2[pl2Size] = other.gameObject;
                     ++pl2Size;

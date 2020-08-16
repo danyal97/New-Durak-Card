@@ -12,6 +12,7 @@ public class updateCordinates : MonoBehaviour
     GameObject[] Player2Cards;
     int player1CardSize;
     int player2CardSize;
+    public FirebaseScript playerCardInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class updateCordinates : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FirebaseScript playerCardInfo = new FirebaseScript();
+        //FirebaseScript playerCardInfo = new FirebaseScript();
         p1 = gameManager.player1Reciever.gameObject;
         p2 = gameManager.player2Reciever.gameObject;
         Player1Cards = p1.GetComponent<addCards>().pl1;
@@ -40,7 +41,7 @@ public class updateCordinates : MonoBehaviour
             string posx = Player2Cards[i].gameObject.transform.position.x.ToString();
             string posy = Player2Cards[i].gameObject.transform.position.y.ToString();
             string posz = Player2Cards[i].gameObject.transform.position.z.ToString();
-            playerCardInfo.AddCoordinatesToDatabse("1", Player2Cards[i].gameObject.transform.tag.ToString(), posx, posy, posz);
+            playerCardInfo.AddCoordinatesToDatabse("2", Player2Cards[i].gameObject.transform.tag.ToString(), posx, posy, posz);
         }
     }
 }
