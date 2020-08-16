@@ -35,14 +35,14 @@ public class updateCordinates : MonoBehaviour
             string posx = Player1Cards[i].gameObject.transform.position.x.ToString();
             string posy = Player1Cards[i].gameObject.transform.position.y.ToString();
             string posz = Player1Cards[i].gameObject.transform.position.z.ToString();
-            playerCardInfo.AddCoordinatesToDatabse("1", Player1Cards[i].gameObject.transform.tag.ToString(), posx, posy, posz);
+            playerCardInfo.AddCoordinatesToDatabse("1", Player1Cards[i].gameObject.name.ToString(), posx, posy, posz);
         }
         for (int i = 0; i < player2CardSize; i++)
         {
             string posx = Player2Cards[i].gameObject.transform.position.x.ToString();
             string posy = Player2Cards[i].gameObject.transform.position.y.ToString();
             string posz = Player2Cards[i].gameObject.transform.position.z.ToString();
-            playerCardInfo.AddCoordinatesToDatabse("2", Player2Cards[i].gameObject.transform.tag.ToString(), posx, posy, posz);
+            playerCardInfo.AddCoordinatesToDatabse("2", Player1Cards[i].gameObject.name.ToString(), posx, posy, posz);
         }
     }
 }
