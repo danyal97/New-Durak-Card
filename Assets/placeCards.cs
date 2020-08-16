@@ -17,7 +17,7 @@ public class placeCards : MonoBehaviour
 
     GameObject[] allCards = new GameObject[36];
     int noOfAvalibleCardsIntray = 0;
-    int positionalIndex = 0;
+    public int positionalIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,8 +66,6 @@ public class placeCards : MonoBehaviour
     void Update()
     {
         setTrumpSuit(gameManager.trumpcardString);
-        //for (int j = 0; j < gameobjects.Length; j++)
-        //{
             for (int i = 0; i < positionalIndex; i++)
             {
                 if (cards[i] != null && gameobjects[i].transform.position != null)
@@ -76,10 +74,6 @@ public class placeCards : MonoBehaviour
                     Debug.Log("Update mid");
                 }
             }
-        //}
-        //Debug.Log("Update mid");
-        //for (int i =0;i<gameobjects.Length;i++)
-        //{
         for (int j =0;j<colidableObject.Length;j++) {
 
             if (colidableObject[j].GetComponent<onCollision>().card != null)

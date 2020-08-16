@@ -158,6 +158,7 @@ public class FirebaseScript:MonoBehaviour
     }
     public void RetreiveCoordinateFromDatabse(string playerNo1, string cardName, string positionx, string positiony, string positionz)
     {
+        
         //print("Retreive Coordinates From database Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
 
@@ -182,15 +183,14 @@ public class FirebaseScript:MonoBehaviour
                             userfound = true;
                             foreach (var cardNam in useid.Children)
                             {
-                                GameObject gb = GameObject.Find(cardNam.Key).gameObject;
-                                Vector3 positon = new Vector3();
+                                
                                 // Gives Card Name
                                 foreach (var pos in cardNam.Children)
                                 {
                                     
                                     if(pos.Key== "positionX")
                                     {
-                                        Debug.Log("Position x"+pos.Value);
+                                        Debug.Log("Position x"+float.Parse(pos.Value.ToString()));
                                     }
                                     else if (pos.Key == "positionY")
                                     {
@@ -486,8 +486,9 @@ public class FirebaseScript2
         reference.Child("game2").Child(this.RetreiveGameNO()).Child(userid).Child(cardName).Child("positionY").SetValueAsync(positiony);
         reference.Child("game2").Child(this.RetreiveGameNO()).Child(userid).Child(cardName).Child("positionZ").SetValueAsync(positionz);
     }
-    public void RetreiveCoordinateFromDatabse(string playerNo1, string cardName, string positionx, string positiony, string positionz)
+    public void RetreiveCoordinateFromDatabse()
     {
+        GameObject[] player2Cards = new GameObject[36];
         //print("Retreive Coordinates From database Called");
         reference = FirebaseDatabase.DefaultInstance.RootReference;
 
@@ -495,6 +496,7 @@ public class FirebaseScript2
         Debug.Log("User Id Of Player " + userid);
         FirebaseDatabase.DefaultInstance.GetReference("game2").GetValueAsync().ContinueWith(task =>
         {
+            
             List<string> data = new List<string>();
             DataSnapshot snapshot = task.Result;
             bool userfound = false;
@@ -512,15 +514,15 @@ public class FirebaseScript2
                             userfound = true;
                             foreach (var cardNam in useid.Children)
                             {
-                                GameObject gb = GameObject.Find(cardNam.Key).gameObject;
-                                Vector3 positon = new Vector3();
+                                
+                                //Vector3 positon = new Vector3();
                                 // Gives Card Name
                                 foreach (var pos in cardNam.Children)
                                 {
 
                                     if (pos.Key == "positionX")
                                     {
-                                        Debug.Log("Position x" + pos.Value);
+                                        
                                     }
                                     else if (pos.Key == "positionY")
                                     {
@@ -538,25 +540,25 @@ public class FirebaseScript2
                             // This Is Player2 Data
                             foreach (var cardNam in useid.Children)
                             {
+                                GameObject gb = GameObject.Find(cardNam.Key).gameObject;
+                                Vector3 position = new Vector3();
                                 // Gives Card Name
                                 foreach (var pos in cardNam.Children)
                                 {
                                     if (pos.Key == "positionX")
                                     {
-
+                                        position.x=float.Parse(pos.Value.ToString());
                                     }
                                     else if (pos.Key == "positionY")
                                     {
-
+                                        position.y = float.Parse(pos.Value.ToString());
                                     }
                                     else if (pos.Key == "positionZ")
                                     {
-
+                                        position.z = float.Parse(pos.Value.ToString());
                                     }
                                 }
                             }
-
-
                         }
                     }
                     if (userfound)

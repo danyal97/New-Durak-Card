@@ -164,6 +164,9 @@ public class addCards : MonoBehaviour
     public bool isRecievabe =true;
     private void OnTriggerEnter(Collider other)
     {
+        onEnterReplica(other.gameObject);
+    }
+    public void onEnterReplica(GameObject other) {
         if (!isRecievabe)
         {
             return;
@@ -174,11 +177,11 @@ public class addCards : MonoBehaviour
             if (other.gameObject.tag == "Card")
             {
                 Debug.Log(other.gameObject.name);
-                if (p== Player.player1)
+                if (p == Player.player1)
                 {
                     myCards[myCardsSize] = other.gameObject;
                     other.gameObject.tag = "Player1Cards";
-                    
+
                     other.gameObject.SetActive(false);
                     other.GetComponent<moveCard>().isRecieved = true;
                     pl1[pl1Size] = other.gameObject;
@@ -187,10 +190,10 @@ public class addCards : MonoBehaviour
                     ++myCardsSize;
                     arangecards();
 
-                    if (pl1Size >= 6)
+                    /*if (pl1Size >= 6)
                     {
                         isRecievabe = false;
-                    }
+                    }*/
                     if (myCardsSize == 6)
                     {
                         Debug.Log("condition in triger start");
@@ -209,40 +212,16 @@ public class addCards : MonoBehaviour
                     Debug.Log("Pl2 SIze " + pl2Size);
                     ++myCardsSize;
                     arangecards();
-                    if (pl2Size >= 6)
-                    {
-                        isRecievabe = false;
-                    }
+                    /*                    if (pl2Size >= 6)
+                                        {
+                                            isRecievabe = false;
+                                        }
+                                        */
                 }
-                
+
                 /*++myCardsSize;
                 arangecards();*/
             }
         }
-    }
-    public void onEnterReplica(GameObject other) {
-        /*Debug.Log("OnTriggerEnter------------------------------------");
-        if (other.gameObject.tag == "Card")
-        {
-            Debug.Log(other.gameObject.name);
-            myCards[myCardsSize] = other.gameObject;
-            other.gameObject.SetActive(false);
-            other.GetComponent<moveCard>().isRecieved = true;
-            if (this.gameObject.tag == "player1")
-            {
-                pl1[pl1Size] = other.gameObject;
-                other.gameObject.tag = "Player1Cards";
-                Debug.Log("" + other.gameObject.tag);
-                pl1Size++;
-            }
-            if (this.gameObject.tag == "player2")
-            {
-                pl2[pl2Size] = other.gameObject;
-                other.gameObject.tag = "Player2Cards";
-                pl2Size++;
-            }
-            myCardsSize++;
-            arangecards();
-        }*/
     }
 }
