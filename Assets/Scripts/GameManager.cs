@@ -26,16 +26,19 @@ public class GameManager : MonoBehaviour {
     private float waitForSecond = 5000;
     int carddCurrentIndex = 35;
     public GameObject player1, player2, player3, player4;
+    public GameObject trumpCard;
+    public string trumpcardString="";
     bool isRestakingDone = false;
     int currentPositionOffCards = 22;
     bool isStacked = true;
+
     // Start is called before the first frame update
-    private void Start () {
+    private void Start() {
         //this.gameObject.transform.position =new  Vector3(15.3800001f, -1.10000002f, 20.1900005f);
-        ShuffleCards ();
+        ShuffleCards();
     }
     // Update is called once per frame
-    void Update () {
+    void Update() {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         if (isDistrbuting)
@@ -53,62 +56,88 @@ public class GameManager : MonoBehaviour {
     //    reference.Child(id.ToString()).Child("City").SetValueAsync(city);
     //    return "Save data to firebase Done.";
     //}
-    public void ShuffleCards () {
-        int num = Random.Range (0, cards.Length);
+    public void ShuffleCards() {
+        int num = Random.Range(0, cards.Length);
         for (int i = 0; i < cards.Length; i++) {
             GameObject temp = cards[i];
             cards[i] = cards[num];
             cards[num] = temp;
-            num = Random.Range (0, cards.Length);
+            num = Random.Range(0, cards.Length);
         }
-        cards[cards.Length - 1].GetComponent<moveCard> ().isOnTop = true;
-        StackCards ();
+        cards[cards.Length - 1].GetComponent<moveCard>().isOnTop = true;
+        StackCards();
     }
-    public void DrawCards (int cardsRequired, Player p) {
+    public void DrawCards(int cardsRequired, Player p) {
         int newCurrentPostionOfCards = currentPositionOffCards - cardsRequired;
         if (p == Player.player1) {
             for (int i = currentPositionOffCards; i >= newCurrentPostionOfCards; i--) {
-                player1Reciever.gameObject.GetComponent<addCards> ().onEnterReplica (newCards[i]);
+                player1Reciever.gameObject.GetComponent<addCards>().onEnterReplica(newCards[i]);
             }
             currentPositionOffCards -= cardsRequired;
         }
         if (p == Player.player2) {
             for (int i = currentPositionOffCards; i >= newCurrentPostionOfCards; i--) {
-                player2Reciever.gameObject.GetComponent<addCards> ().onEnterReplica (newCards[i]);
+                player2Reciever.gameObject.GetComponent<addCards>().onEnterReplica(newCards[i]);
             }
             currentPositionOffCards -= cardsRequired;
         }
     }
-    
-    public void Distribute () {
 
-        for (int i = 35; i >= 0; i--) {
-            if (i == 35 || i == 33 || i == 31 || i == 29 || i == 27 || i == 25) {
-                if (!cards[i].GetComponent<moveCard> ().isRecieved) {
+    public void Distribute() {
+        
+        for (int i = 35; i >= 24; i--) {
+            if (i == 35 || i == 33 || i == 31 || i == 29 || i == 27 || i == 25)
+            {
+                if (!cards[i].GetComponent<moveCard>().isRecieved)
+                {
                     //Debug.Log(" first");
                     //cards[i].transform.LookAt(player1.transform);
-                    float distance = Vector3.Distance (cards[i].transform.position, player1.gameObject.transform.position);
+                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
                     if (distance > 0)
                         cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
                     //Debug.Log(cards[i].gameObject.name);
 
+                    //if (i == 25)
+                    Debug.Log("moiz");
+                    SetTrumpCard();
+                        
+                        StackCards();
+                        
+                    cards[0].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
+                    
+                        //Debug.Log("Quratation " + cards[0].gameObject.transform.rotation);
+                        if (cards[0].name.Contains("C"))
+                        {
+                            trumpcardString = "C";
+                        }
+                        if (cards[0].name.Contains("S"))
+                        {
+                            trumpcardString = "S";
+                        }
+                        if (cards[0].name.Contains("D"))
+                        {
+                            trumpcardString = "D";
+                        }
+                        if (cards[0].name.Contains("H"))
+                        {
+                            trumpcardString = "H";
+                        }
+                    //}
                 }
-            } else if (i == 34 || i == 32 || i == 30 || i == 28 || i == 26 || i == 24) {
-                if (!cards[i].GetComponent<moveCard> ().isRecieved) {
+            }
+            else if (i == 34 || i == 32 || i == 30 || i == 28 || i == 26 || i == 24)
+            {
+                if (!cards[i].GetComponent<moveCard>().isRecieved)
+                {
                     //Debug.Log(" first");
                     //cards[i].transform.LookAt(player1.transform);
-                    float distance = Vector3.Distance (cards[i].transform.position, player1.gameObject.transform.position);
+                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
                     if (distance > 0)
                         cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
                     //Debug.Log(cards[i].gameObject.name);
                 }
-                /*if (i == 24) {
-                    isStacked = false;
-                }*/
-                GameObject trumpCard = cards[23].gameObject;
-                for (int j = 22; j >= 0; j--) {
-                    newCards[j] = cards[j];
-                }
+                
+
             }
             /*
             if (i == 35 || i == 31 || i == 27 || i == 23 || i == 19 || i == 15)
@@ -158,32 +187,20 @@ public class GameManager : MonoBehaviour {
                         cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
                 }
             }*/
-            else {
-                /*if (!cards[i].GetComponent<moveCard>().isRecieved && !isRestakingDone )
-                    ReStackCards();
-                    */
-            }
-        }
-        //get the distance between the chaser and the target
+            
 
-        //for (carddCurrentIndex =35; carddCurrentIndex > 14; carddCurrentIndex--) {
-        //        cards[carddCurrentIndex].gameObject.transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
-        //    }
-    }
-    public void ReStackCards () {
-        //cards[i].transform.position = new Vector3(-10.8100004f, 0.98564297f, 20.9899998f);
-        float height = 0.020627f;
-        //Vector3 pos = new Vector3 (-10.8100004f, 0.98564297f, 20.9899998f);
-        float lastDistance = pos.y;
-        for (int i = 0; i < cards.Length; i++) {
-            if (i == 0 && !cards[i].gameObject.GetComponent<moveCard> ().isRecieved) {
-                cards[i].gameObject.transform.position = new Vector3 (pos.x, lastDistance + 1, pos.z);
-                lastDistance = pos.y + (height) * i + 1;
-            } else if (!cards[i].gameObject.GetComponent<moveCard> ().isRecieved) {
-                cards[i].gameObject.transform.position = new Vector3 (pos.x, lastDistance, pos.z);
-                lastDistance = pos.y + (height) * i + 1;
-            }
         }
+    }
+
+    public void SetTrumpCard(){
+            GameObject temp = cards[23].gameObject;
+            cards[23] = cards[0].gameObject;
+            cards[0] = temp;
+            trumpCard = cards[0].gameObject;
+            for (int j = 23; j >= 1; j--)
+            {
+                newCards[j] = cards[j];
+            }
     }
     public void StackCards()
     {

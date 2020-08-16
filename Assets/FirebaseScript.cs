@@ -163,8 +163,6 @@ public class FirebaseScript:MonoBehaviour
             List<string> data = new List<string>();
             DataSnapshot snapshot = task.Result;
             bool userfound = false;
-
-
             
             if (snapshot.ChildrenCount > 0)
             {
@@ -179,12 +177,15 @@ public class FirebaseScript:MonoBehaviour
                             userfound = true;
                             foreach (var cardNam in useid.Children)
                             {
+                                GameObject gb = GameObject.Find(cardNam.Key).gameObject;
+                                Vector3 positon = new Vector3();
                                 // Gives Card Name
-                                foreach(var pos in cardNam.Children)
+                                foreach (var pos in cardNam.Children)
                                 {
+                                    
                                     if(pos.Key== "positionX")
                                     {
-
+                                        Debug.Log("Position x"+pos.Value);
                                     }
                                     else if (pos.Key == "positionY")
                                     {
