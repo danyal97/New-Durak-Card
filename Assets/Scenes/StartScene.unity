@@ -403,6 +403,26 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4968529300547503465, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529300547503465, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529300547503465, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529300547503466, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968529300547503467, guid: 24febd529d48c52469a9393c26c45969, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4968529301390965813, guid: 24febd529d48c52469a9393c26c45969, type: 3}
       propertyPath: m_PreserveAspect
       value: 0
@@ -483,6 +503,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f16b7d998383cb4091a4e3fc90241b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNo: 0
+  gameNoToBeAdded: 
 --- !u!114 &1356493913 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4968529301383099895, guid: 24febd529d48c52469a9393c26c45969, type: 3}
