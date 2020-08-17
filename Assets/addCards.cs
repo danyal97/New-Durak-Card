@@ -148,6 +148,7 @@ public class addCards : MonoBehaviour
                 Debug.Log(other.gameObject.name);
                 if (p == Player.player1)
                 {
+                    
                     myCards[myCardsSize] = other.gameObject;
                     other.gameObject.tag = "Player1Cards";
 
@@ -170,6 +171,7 @@ public class addCards : MonoBehaviour
                 
             }else if (p == Player.player1 && other.gameObject.tag == "Player1Cards")
             {
+                    Debug.Log("MycardSize :" + myCardsSize);
                     myCards[myCardsSize] = other.gameObject;
                     other.gameObject.tag = "Player1Cards";
                     other.gameObject.SetActive(false);
