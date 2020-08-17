@@ -382,7 +382,7 @@
 
                                     //Vector3 positon = new Vector3();
                                     // Gives Card Name
-                                    Debug.Log ("CardNam Key" + cardNam.key.ToString ());
+                                    //Debug.Log("CardNam Key" + cardNam.Key.ToString());
                                     foreach (var pos in cardNam.Children) {
 
                                         if (pos.Key == "positionX") {
@@ -394,24 +394,34 @@
                                         }
                                     }
                                 }
-                            } else {
-
+                            }
+                            if (useid.Key != userid)
+                            {
+                                userfound = true;
                                 // This Is Player2 Data
-                                foreach (var cardNam in useid.Children) {
+                                foreach (var cardNamg in useid.Children)
+                                {
                                     //GameObject gb = GameObject.Find(cardNam.Key).gameObject;
-                                    Debug.Log ("CardNam Key" + cardNam.key.ToString ());
-                                    Vector3 position = new Vector3 ();
+                                    //Debug.Log ("CardNam Key" + cardNam.ToString ());
+                                    Vector3 position = new Vector3();
+                                    Debug.Log("CardNam Key 2" + cardNamg.Key);
                                     // Gives Card Name
-                                    foreach (var pos in cardNam.Children) {
-                                        if (pos.Key == "positionX") {
-                                            position.x = float.Parse (pos.Value.ToString ());
-                                            Debug.Log ("X" + position.x);
-                                        } else if (pos.Key == "positionY") {
-                                            position.y = float.Parse (pos.Value.ToString ());
-                                            Debug.Log ("Y" + position.y);
-                                        } else if (pos.Key == "positionZ") {
-                                            position.z = float.Parse (pos.Value.ToString ());
-                                            Debug.Log ("Z" + position.z);
+                                    foreach (var pos in cardNamg.Children)
+                                    {
+                                        if (pos.Key == "positionX")
+                                        {
+                                            position.x = float.Parse(pos.Value.ToString());
+                                            Debug.Log("X" + position.x);
+                                        }
+                                        else if (pos.Key == "positionY")
+                                        {
+                                            position.y = float.Parse(pos.Value.ToString());
+                                            Debug.Log("Y" + position.y);
+                                        }
+                                        else if (pos.Key == "positionZ")
+                                        {
+                                            position.z = float.Parse(pos.Value.ToString());
+                                            Debug.Log("Z" + position.z);
                                         }
                                     }
 
@@ -424,9 +434,25 @@
                     }
 
                 }
+
+
+
+                
             });
 
-        }
+
+
+       
+
+
+
+
+
+
+        
+
+
+    }
         public string GetUserIdOfPlayer () {
             Debug.Log ("UserID Called");
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
