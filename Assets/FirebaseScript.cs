@@ -347,157 +347,129 @@
             });
         }
         public void AddCoordinatesToDatabse (string playerNo1, string cardName, string positionx, string positiony, string positionz) {
-            //print("Add Coordinates To database Called");
-
             reference = FirebaseDatabase.DefaultInstance.RootReference;
             string userid = this.GetUserIdOfPlayer ();
-            Debug.Log ("User Id Of Player " + userid);
-
-            Debug.Log (userid + "game to be added" + this.RetreiveGameNO () + "card name" + cardName + "postion " + positionx);
-            reference.Child ("game2").Child (this.RetreiveGameNO ()).Child (userid).Child (cardName).Child ("positionX").SetValueAsync (positionx);
-            reference.Child ("game2").Child (this.RetreiveGameNO ()).Child (userid).Child (cardName).Child ("positionY").SetValueAsync (positiony);
-            reference.Child ("game2").Child (this.RetreiveGameNO ()).Child (userid).Child (cardName).Child ("positionZ").SetValueAsync (positionz);
+            reference.Child ("game").Child (userid).Child (cardName).Child ("positionX").SetValueAsync (positionx);
+            reference.Child ("game").Child (userid).Child (cardName).Child ("positionY").SetValueAsync (positiony);
+            reference.Child ("game").Child (userid).Child (cardName).Child ("positionZ").SetValueAsync (positionz);
         }
         public void RetreiveCoordinateFromDatabse () {
-            GameObject[] player2Cards = new GameObject[36];
-            //print("Retreive Coordinates From database Called");
-            reference = FirebaseDatabase.DefaultInstance.RootReference;
-
-            string userid = this.GetUserIdOfPlayer ();
-            Debug.Log ("User Id Of Player " + userid);
-            FirebaseDatabase.DefaultInstance.GetReference ("game2").GetValueAsync ().ContinueWith (task => {
-
-                List<string> data = new List<string> ();
-                DataSnapshot snapshot = task.Result;
-                bool userfound = false;
-
-                if (snapshot.ChildrenCount > 0) {
-                    // Game No ke andar gaya
-                    foreach (var gamNo in snapshot.Children) {
-                        foreach (var useid in gamNo.Children) {
-                            // This Is Player1 Data
-                            if (useid.Key == userid) {
-                                userfound = true;
-                                foreach (var cardNam in useid.Children) {
-
-                                    //Vector3 positon = new Vector3();
-                                    // Gives Card Name
-                                    //Debug.Log("CardNam Key" + cardNam.Key.ToString());
-                                    foreach (var pos in cardNam.Children) {
-
-                                        if (pos.Key == "positionX") {
-
-                                        } else if (pos.Key == "positionY") {
-
-                                        } else if (pos.Key == "positionZ") {
-
-                                        }
-                                    }
-                                }
-                            }
-                            if (useid.Key != userid)
-                            {
-                                userfound = true;
-                                // This Is Player2 Data
-                                foreach (var cardNamg in useid.Children)
-                                {
-                                    //GameObject gb = GameObject.Find(cardNam.Key).gameObject;
-                                    //Debug.Log ("CardNam Key" + cardNam.ToString ());
-                                    Vector3 position = new Vector3();
-                                    Debug.Log("CardNam Key 2" + cardNamg.Key);
-                                    // Gives Card Name
-                                    foreach (var pos in cardNamg.Children)
-                                    {
-                                        if (pos.Key == "positionX")
-                                        {
-                                            position.x = float.Parse(pos.Value.ToString());
-                                            Debug.Log("X" + position.x);
-                                        }
-                                        else if (pos.Key == "positionY")
-                                        {
-                                            position.y = float.Parse(pos.Value.ToString());
-                                            Debug.Log("Y" + position.y);
-                                        }
-                                        else if (pos.Key == "positionZ")
-                                        {
-                                            position.z = float.Parse(pos.Value.ToString());
-                                            Debug.Log("Z" + position.z);
-                                        }
-                                    }
-
-                                }
-                            }
+        string currentuserid = this.GetUserIdOfPlayer();
+        string FirstPlayerUserid="";
+        string SecondPlayerUserid="";
+        FirebaseDatabase.DefaultInstance.GetReference("game").GetValueAsync().ContinueWith(task => {
+            DataSnapshot snapshot = task.Result;
+            if (snapshot.ChildrenCount > 0)
+            {
+                foreach (var gamenumber in snapshot.Children)
+                {
+                    
+                    
+                    foreach (var key in gamenumber.Children)
+                    {
+                        if(key.Key== "Player 1")
+                        {
+                            FirstPlayerUserid = key.Value.ToString();
+                            Debug.Log("First Player User Id " + FirstPlayerUserid);
                         }
-                        if (userfound) {
-                            break;
+                        else if (key.Key== "Player 2")
+                        {
+                            SecondPlayerUserid = key.Value.ToString();
+                            Debug.Log("Second Player User Id " + SecondPlayerUserid);
+                        }                        
+
+                    }
+                    if (gamenumber.Key==FirstPlayerUserid)
+                    {
+                        foreach (var cardname in gamenumber.Children)
+                        {
+                            Debug.Log("Card Name For Player 1 : " + cardname.Key);
+                            foreach(var cardposition in cardname.Children)
+                            {
+                                Debug.Log("Card Position Name For Player 1 : " + cardposition.Key);
+                                Debug.Log("Card Position For Player 1 : " + cardposition.Value.ToString());
+                                if (cardposition.Key == "positionX")
+                                {
+                                    string cardpositionX = cardposition.Value.ToString();
+
+                                }
+                                else if (cardposition.Key == "positionY")
+                                {
+                                    string cardpositionY = cardposition.Value.ToString();
+                                }
+                                else if (cardposition.Key == "positionZ")
+                                {
+                                    string cardpositionZ = cardposition.Value.ToString();
+                                }
+                            }
+                            
                         }
                     }
+                    else if (gamenumber.Key == SecondPlayerUserid)
+                    {
+                        foreach (var cardname in gamenumber.Children)
+                        {
+                            Debug.Log("Card Name For Player 2 : " + cardname.Key);
+                            foreach (var cardposition in cardname.Children)
+                            {
+                                Debug.Log("Card Position Name For Player 2 : " + cardposition.Key);
+                                Debug.Log("Card Position For Player 2 : " + cardposition.Value.ToString());
+                                if (cardposition.Key == "positionX")
+                                {
+                                    string cardpositionX = cardposition.Value.ToString();
 
+                                }
+                                else if (cardposition.Key == "positionY")
+                                {
+                                    string cardpositionY = cardposition.Value.ToString();
+                                }
+                                else if (cardposition.Key == "positionZ")
+                                {
+                                    string cardpositionZ = cardposition.Value.ToString();
+                                }
+                            }
+                        }
+                    }
                 }
 
+            }
+        });
 
-
-                
-            });
-
-
-
-       
-
-
-
-
-
-
-        
 
 
     }
-        public string GetUserIdOfPlayer () {
-            Debug.Log ("UserID Called");
+    public string GetUserIdOfPlayer () {
+            
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             return auth.CurrentUser.UserId.ToString ();
         }
         public void AddPlayerToGame (string userId, string gameNo, long childrenCount) {
-            Debug.Log ("Reference Called");
             reference = FirebaseDatabase.DefaultInstance.RootReference;
-            Game user1 = new Game (userId);
-            string json = JsonUtility.ToJson (user1);
-            Debug.Log ("Json Conversion Called");
-
             if (childrenCount % 2 == 0) {
-                //print("Mod 1 called game no =" + gameNo);
                 playerNo = 1;
-                gameNoToBeAdded = gameNo;
-                Debug.Log ("Game No TO Be Added" + gameNoToBeAdded);
-                reference.Child ("game").Child (gameNo).Child ("userid").SetValueAsync (userId);
+                reference.Child ("game").Child (gameNo).Child ("Player 1").SetValueAsync (userId);
             } else if (childrenCount % 2 == 1) {
-                // print("Mod 2 called game no ="+gameNo);
                 playerNo = 2;
-                gameNoToBeAdded = gameNo;
-                Debug.Log ("Game No TO Be Added" + gameNoToBeAdded);
-                reference.Child ("game").Child (gameNo).Child ("userid1").SetValueAsync (userId);
+                reference.Child ("game").Child (gameNo).Child ("Player 2").SetValueAsync (userId);
             }
         }
         public void AddToGame () {
 
             string userid = this.GetUserIdOfPlayer ();
-            Debug.Log ("User Id Of Player " + userid);
+            
             bool gameComplete = false;
             FirebaseDatabase.DefaultInstance.GetReference ("game").GetValueAsync ().ContinueWith (task => {
-                List<string> data = new List<string> ();
+                
                 DataSnapshot snapshot = task.Result;
 
                 if (snapshot.ChildrenCount > 0) {
                     foreach (var i in snapshot.Children) {
                         if (i.ChildrenCount == 1) {
-                            //if (userid!=i.Child("userId").Value.ToString())
-                            //{
-                            //print("First if Condition Called key = "+i.Key);
+                            
                             this.AddPlayerToGame (userid, i.Key, i.ChildrenCount);
                             gameComplete = true;
                             break;
-                            //}
+                            
 
                         }
                     }
@@ -507,11 +479,9 @@
                         lastKey = j.Key;
                     }
                     if (!gameComplete) {
-                        //print("First 2nd Condition Called");
                         this.AddPlayerToGame (userid, (int.Parse (lastKey) + 1).ToString (), 0);
                     }
                 } else {
-                    //print("First else Condition Called");
                     this.AddPlayerToGame (userid, "1", 0);
                 }
             });
@@ -519,42 +489,46 @@
         }
 
         public string RetreiveGameNO () {
-
+        Debug.Log("Game No Called");
             string userid = this.GetUserIdOfPlayer ();
-            Debug.Log ("User Id Of Player " + userid);
-            bool gameComplete = false;
+
+        bool needtobreak = false;
             string gameNumber = "";
             FirebaseDatabase.DefaultInstance.GetReference ("game").GetValueAsync ().ContinueWith (task => {
-                List<string> data = new List<string> ();
                 DataSnapshot snapshot = task.Result;
 
                 if (snapshot.ChildrenCount > 0) {
                     foreach (var i in snapshot.Children) {
-                        if (i.ChildrenCount == 1) {
-                            //if (userid!=i.Child("userId").Value.ToString())
-                            //{
-                            //print("First if Condition Called key = "+i.Key);
-                            gameNumber = i.Key;
-                            gameComplete = true;
-                            break;
-                            //}
+                        foreach(var useridd in i.Children)
+                        {
+                            if (userid == useridd.Value.ToString())
+                            {
 
+                                this.gameNoToBeAdded = i.Key;
+                              
+                                //Debug.Log("Game NUmber I.key " + i.Key);
+                                needtobreak = true;
+                                break;
+                            }
                         }
-                    }
-                    string lastKey = "1";
+                        if(needtobreak)
+                        {
+                            break;
+                        }
+                       
+                        
 
-                    foreach (var j in snapshot.Children) {
-                        lastKey = j.Key;
+                        
                     }
-                    if (!gameComplete) {
-                        //print("First 2nd Condition Called");
-                        gameNumber = (int.Parse (lastKey) + 1).ToString ();
-                    }
+  
+
                 } else {
                     //print("First else Condition Called");
-                    gameNumber = "1";
+                    this.gameNoToBeAdded = "1";
                 }
             });
+
+        //Debug.Log("game game game " + this.gameNoToBeAdded);
 
             return gameNumber;
 
