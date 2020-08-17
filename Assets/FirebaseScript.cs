@@ -263,6 +263,7 @@
         public string gameNoToBeAdded;
         public string gameFromFirebase { get; set; }
 
+
         // Start is called before the first frame update
         void Start () {
 
@@ -462,7 +463,69 @@
 
 
 
+
+    
+        
+
     }
+
+    void HandleChildAdded(object sender, ChildChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        this.RetreiveCoordinateFromDatabse();
+        SceneManager.LoadScene("PlayScene");
+        // Do something with the data in args.Snapshot
+    }
+
+    void HandleChildChanged(object sender, ChildChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        this.RetreiveCoordinateFromDatabse();
+        SceneManager.LoadScene("PlayScene");
+        // Do something with the data in args.Snapshot
+    }
+
+    void HandleChildRemoved(object sender, ChildChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        this.RetreiveCoordinateFromDatabse();
+        SceneManager.LoadScene("PlayScene");
+        // Do something with the data in args.Snapshot
+    }
+
+    void HandleChildMoved(object sender, ChildChangedEventArgs args)
+    {
+        if (args.DatabaseError != null)
+        {
+            Debug.LogError(args.DatabaseError.Message);
+            return;
+        }
+        this.RetreiveCoordinateFromDatabse();
+        SceneManager.LoadScene("PlayScene");
+        // Do something with the data in args.Snapshot
+    }
+    public void HandleChangeOfCards()
+    {
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        reference.ChildAdded += HandleChildAdded;
+        reference.ChildChanged += HandleChildChanged;
+        reference.ChildRemoved += HandleChildRemoved;
+        reference.ChildMoved += HandleChildMoved;
+    }
+
     public string GetUserIdOfPlayer () {
             
             auth = Firebase.Auth.FirebaseAuth.DefaultInstance;

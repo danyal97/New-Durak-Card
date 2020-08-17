@@ -16,14 +16,15 @@ public class updateCordinates : MonoBehaviour
     float time1 = 0;
     float time2 = 0;
     // Start is called before the first frame update
+    //void Start()
+    //{
+        
+    //}
+    // Update is called once per frame
+    int times = 0;
     void Start()
     {
         playerCardInfo = new FirebaseScript2();
-    }
-    // Update is called once per frame
-    int times = 0;
-    void Update()
-    {
         times++;
         //FirebaseScript playerCardInfo = new FirebaseScript();
         p1 = gameManager.player1Reciever.gameObject;
