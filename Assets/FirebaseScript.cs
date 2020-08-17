@@ -428,7 +428,7 @@
                     {
                         foreach (var cardname in gamenumber.Children)
                         {
-                            GameObject gb = new GameObject(cardname.Key);
+                            GameObject gb = GameObject.Find(cardname.Key);
                             Vector3 vector = new Vector3();
                             Debug.Log("Card Name For Player 2 : " + cardname.Key);
                             foreach (var cardposition in cardname.Children)
