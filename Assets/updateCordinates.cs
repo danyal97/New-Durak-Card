@@ -38,12 +38,12 @@ public class updateCordinates : MonoBehaviour
         time2 += Time.deltaTime+0.1f;
         //if (time1 > 3)
         //{
-        //    playerCardInfo.RetreiveCoordinateFromDatabse();
+            playerCardInfo.RetreiveCoordinateFromDatabse();
         //    time1 = 0;
         //}
 
         //if (time1 > 3) {
-            
+            /*
             for (int i = 0; i < player1CardSize; i++)
             {
                 string posx = Player1Cards[i].gameObject.transform.position.x.ToString();
@@ -52,6 +52,7 @@ public class updateCordinates : MonoBehaviour
                 playerCardInfo.AddCoordinatesToDatabse("1", Player1Cards[i].gameObject.name.ToString(), posx, posy, posz);
             }
             time1 = 0;
+            */
         //}
 
         //if (times == 1)

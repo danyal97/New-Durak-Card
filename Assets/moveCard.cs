@@ -40,6 +40,7 @@ public class moveCard : MonoBehaviour
     float speedModifier = 0.0011f;
     GameObject selected;
     public bool isTouchable = true;
+    FirebaseScript2 playerCardInfo;
     void Start()
     {
         place1a.position = pos1a;
@@ -88,6 +89,7 @@ public class moveCard : MonoBehaviour
                 target = GameObject.FindWithTag("Player").GetComponent<Transform>();
             }
         }
+        playerCardInfo = new FirebaseScript2();
     }   
     void Update()
     {
@@ -117,7 +119,12 @@ public class moveCard : MonoBehaviour
                     selected.transform.position = new Vector3(selected.transform.position.x + touch.deltaPosition.x * speedModifier,
                     selected.transform.position.y,
                     selected.transform.position.z + touch.deltaPosition.y * speedModifier
-                                );
+                    );
+                    string posx = selected.transform.position.x.ToString();
+                    string posy = selected.transform.position.y.ToString();
+                    string posz = selected.transform.position.z.ToString();
+                    playerCardInfo.AddCoordinatesToDatabse("1", this.gameObject.name, posx, posy, posz);
+
                 }
             }
             else

@@ -354,6 +354,7 @@
             reference.Child ("game").Child (userid).Child (cardName).Child ("positionZ").SetValueAsync (positionz);
         }
         public void RetreiveCoordinateFromDatabse () {
+        
         string currentuserid = this.GetUserIdOfPlayer();
         string FirstPlayerUserid="";
         string SecondPlayerUserid="";
@@ -420,14 +421,13 @@
                                     string cardpositionZ = cardposition.Value.ToString();
                                 }
                             }
-                            
                         }
                     }
                     else if (gamenumber.Key == SecondPlayerUserid)
                     {
                         foreach (var cardname in gamenumber.Children)
                         {
-                            GameObject gb = GameObject.Find(cardname.Key);
+                            GameObject gb = new GameObject();
                             Vector3 vector = new Vector3();
                             Debug.Log("Card Name For Player 2 : " + cardname.Key);
                             foreach (var cardposition in cardname.Children)
