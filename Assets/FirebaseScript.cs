@@ -322,35 +322,6 @@ public class FirebaseScript:MonoBehaviour
             }
         });
 
-
-
-        //reference
-        //.GetValueAsync().ContinueWith(task =>
-        //{
-        //    Debug.Log("No Successfully Add Player To Game");
-        //    if (task.IsFaulted)
-        //    {
-        //        Debug.Log("No Successfully Add Player To Game");
-        //       // Handle the error...
-        //   }
-        //    else if (task.IsCompleted)
-        //    {
-        //        Dictionary<string, object> data = new Dictionary<string, object>();
-        //        Debug.Log("task Completed");
-        //        DataSnapshot snapshot = task.Result;
-
-        //        Debug.Log("Data Type Of Snapshot " + snapshot.Child("game").Value);
-
-
-        //    }
-        //});
-
-
-
-
-
-
-
     }
 
 }
