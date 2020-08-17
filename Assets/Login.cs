@@ -32,11 +32,13 @@ public class Login : MonoBehaviour
             {
                 if (task.IsCanceled)
                 {
+                    validation.text = "SignInWithEmailAndPasswordAsync was canceled.";
                     Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
                     return;
                 }
                 if (task.IsFaulted)
                 {
+                    validation.text = "SignInWithEmailAndPasswordAsync encountered an error:";
                     Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
                     return;
                 }

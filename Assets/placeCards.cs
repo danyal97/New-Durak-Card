@@ -68,7 +68,7 @@ public class placeCards : MonoBehaviour
         setTrumpSuit(gameManager.trumpcardString);
             for (int i = 0; i < positionalIndex; i++)
             {
-                if (cards[i] != null && gameobjects[i].transform.position != null)
+                if (cards[i] != null && gameobjects[i].transform.position != null && !cards[i].GetComponent<moveCard>().isTouchable)
                 {
                     cards[i].gameObject.transform.position = gameobjects[i].transform.position;
                     Debug.Log("Update mid");
@@ -100,11 +100,17 @@ public class placeCards : MonoBehaviour
                             
                             noOfAvalibleCardsIntray++;
                             positionalIndex++;
-                        }   
-                        
+                        }else if (checkEligibility(colidableObject[j].GetComponent<onCollision>().card, positionalIndex, gameManager.trumpcardString))
+                        {
+                            cards[positionalIndex] = colidableObject[j].GetComponent<onCollision>().card;
+                            cards[positionalIndex].GetComponent<moveCard>().isTouchable = false;
+                            //                            colidableObject[j].SetActive(false);
+                            noOfAvalibleCardsIntray++;
+                            positionalIndex++;
+                        }
               }
               if (positionalIndex >=12) {
-                        Debug.Log("If Player cards are full then");
+                        Debug.Log("If Player cards are full then check Win or Loss");
               }
             
             }
@@ -159,6 +165,16 @@ public class placeCards : MonoBehaviour
         Debug.Log(cards[index - 1].name[0]);
         Debug.Log(obj.name[0]);
 
+        if (obj.tag != "Player1Cards" && cards[index - 1].tag != "Player1Cards" || obj.tag != "Player2Cards" && cards[index - 1].tag != "Player2Cards")
+        {
+            return true;
+        }
+        if (index % 2 !=0 && index!=1 ) {
+            if (cards[index].name[0] == cards[index-1].name[0] || cards[index].name[0] == cards[index - 2].name[0])
+            {
+                return true;
+            }
+        }
         if (obj.gameObject.name.Contains(TrumpSuit))
         {
             if (dict[cards[index - 1].name] < dict[obj.name])
@@ -170,6 +186,7 @@ public class placeCards : MonoBehaviour
         {
             return true;
         }
-        return false;
+        
+            return false;
     }
 }

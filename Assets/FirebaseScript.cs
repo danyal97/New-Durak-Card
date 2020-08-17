@@ -409,25 +409,32 @@
                     {
                         foreach (var cardname in gamenumber.Children)
                         {
+                            GameObject gb = GameObject.Find(cardname.Key);
+                            Vector3 vector = new Vector3();
                             Debug.Log("Card Name For Player 2 : " + cardname.Key);
                             foreach (var cardposition in cardname.Children)
                             {
+                                
                                 Debug.Log("Card Position Name For Player 2 : " + cardposition.Key);
                                 Debug.Log("Card Position For Player 2 : " + cardposition.Value.ToString());
                                 if (cardposition.Key == "positionX")
                                 {
                                     string cardpositionX = cardposition.Value.ToString();
+                                    vector.x = float.Parse(cardpositionX);
 
                                 }
                                 else if (cardposition.Key == "positionY")
                                 {
                                     string cardpositionY = cardposition.Value.ToString();
+                                    vector.y = float.Parse(cardpositionY);
                                 }
                                 else if (cardposition.Key == "positionZ")
                                 {
                                     string cardpositionZ = cardposition.Value.ToString();
+                                    vector.z = float.Parse(cardpositionZ);
                                 }
                             }
+                            gb.gameObject.transform.position = vector;
                         }
                     }
                 }

@@ -21,15 +21,17 @@ public class updateCordinates : MonoBehaviour
         playerCardInfo = new FirebaseScript2();
     }
     // Update is called once per frame
+    int times = 0;
     void Update()
     {
+        times++;
         //FirebaseScript playerCardInfo = new FirebaseScript();
         p1 = gameManager.player1Reciever.gameObject;
         p2 = gameManager.player2Reciever.gameObject;
         Player1Cards = p1.GetComponent<addCards>().pl1;
-        Player2Cards = p2.GetComponent<addCards>().pl2;
+        Player2Cards = p2.GetComponent<addCardsPlayer2>().pl2;
         player1CardSize = p1.GetComponent<addCards>().pl1Size;
-        player2CardSize = p2.GetComponent<addCards>().pl2Size;
+        player2CardSize = p2.GetComponent<addCardsPlayer2>().pl2Size;
 
 
         time1 += Time.deltaTime;
@@ -51,7 +53,8 @@ public class updateCordinates : MonoBehaviour
             }
             time1 = 0;
         }
-        if (time2 > 3)
+
+        if (times == 1)
         {
             for (int i = 0; i < player2CardSize; i++)
             {

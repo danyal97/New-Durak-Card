@@ -18,19 +18,24 @@ public class take : MonoBehaviour
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
         
-        //player1.GetComponent<addCards>.player1
     }
     public void onTake() {
         if (p == Player.player1) {
-            //for (int i =0; i<) {
-                //player1.GetComponent<addCards>().onEnterReplica(cardsOnTable[i]);
-            //}
+            for (int i =0;i< colidersObject.gameObject.GetComponent<placeCards>().positionalIndex;i++) {
+                colidersObject.GetComponent<placeCards>().cards[i].GetComponent<moveCard>().isTouchable = true;
+                if (colidersObject.GetComponent<placeCards>().cards[i]){
+                    Debug.Log("Inside Iff");
+                    player1.gameObject.GetComponent<addCards>().isRecievabe = true;
+                    player1.gameObject.GetComponent<addCards>().onEnterReplica(colidersObject.gameObject.GetComponent<placeCards>().cards[i].gameObject);
+                    //colidersObject.gameObject.GetComponent<placeCards>().positionalIndex;
+                }
+                Debug.Log("On Take");
+                
+            }
         }
     }
 }
-

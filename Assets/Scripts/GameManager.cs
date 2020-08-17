@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour {
         }
         if (p == Player.player2) {
             for (int i = currentPositionOffCards; i >= newCurrentPostionOfCards; i--) {
-                player2Reciever.gameObject.GetComponent<addCards>().onEnterReplica(newCards[i]);
+                player2Reciever.gameObject.GetComponent<addCardsPlayer2>().onEnterReplica(newCards[i]);
             }
             currentPositionOffCards -= cardsRequired;
         }
@@ -111,8 +111,6 @@ public class GameManager : MonoBehaviour {
                         cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
                     //Debug.Log(cards[i].gameObject.name);
                 }
-                
-
             }
             /*
             if (i == 35 || i == 31 || i == 27 || i == 23 || i == 19 || i == 15)
