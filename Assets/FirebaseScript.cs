@@ -405,7 +405,7 @@
                             
                         }
                     }
-                    else if (gamenumber.Key == SecondPlayerUserid)
+                    else if (gamenumber.Key == currentuserid)
                     {
                         foreach (var cardname in gamenumber.Children)
                         {
