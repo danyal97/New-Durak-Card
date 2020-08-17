@@ -369,13 +369,31 @@
                     {
                         if(key.Key== "Player 1")
                         {
-                            FirstPlayerUserid = key.Value.ToString();
-                            Debug.Log("First Player User Id " + FirstPlayerUserid);
+                            if (key.Value.ToString()==currentuserid)
+                            {
+                                FirstPlayerUserid = key.Value.ToString();
+                                Debug.Log("First Player User Id " + FirstPlayerUserid);
+                            }
+                            else
+                            {
+                                SecondPlayerUserid = key.Value.ToString();
+                                Debug.Log("Second Player User Id " + SecondPlayerUserid);
+                            }
+                            
+                            
                         }
                         else if (key.Key== "Player 2")
                         {
-                            SecondPlayerUserid = key.Value.ToString();
-                            Debug.Log("Second Player User Id " + SecondPlayerUserid);
+                            if (key.Value.ToString() == currentuserid)
+                            {
+                                FirstPlayerUserid = key.Value.ToString();
+                                Debug.Log("First Player User Id " + FirstPlayerUserid);
+                            }
+                            else
+                            {
+                                SecondPlayerUserid = key.Value.ToString();
+                                Debug.Log("Second Player User Id " + SecondPlayerUserid);
+                            }
                         }                        
 
                     }
@@ -405,7 +423,7 @@
                             
                         }
                     }
-                    else if (gamenumber.Key == currentuserid)
+                    else if (gamenumber.Key == SecondPlayerUserid)
                     {
                         foreach (var cardname in gamenumber.Children)
                         {
