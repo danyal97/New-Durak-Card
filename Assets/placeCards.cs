@@ -9,9 +9,13 @@ public class placeCards : MonoBehaviour
     public GameManager gameManager;
     public GameObject[] gameobjects = new GameObject[12];
     public GameObject[] colidableObject = new GameObject[6];
-    
+    [SerializeField]
+    GameObject player1;
+    [SerializeField]
+    GameObject player2;
+
     //colidable stack will return ushort the gamobject which is colided
-    
+
     public GameObject[] cards = new GameObject[12];
     //public Vector3[] cardsPos = new Vector3[12];
 
@@ -59,9 +63,7 @@ public class placeCards : MonoBehaviour
                 dict.Add(allCards[i].name, 2);
             }
         }
-        
     }
-    
     // Update is called once per frame
     void Update()
     {
@@ -80,11 +82,12 @@ public class placeCards : MonoBehaviour
             {
               if (noOfAvalibleCardsIntray == 0) {
                         cards[positionalIndex] = colidableObject[j].GetComponent<onCollision>().card;
+                        if (cards[positionalIndex].tag== "Player2Cards") {
+                            cards[positionalIndex].gameObject.transform.rotation = new Quaternion(90,0,0,90);
+                        }
                         cards[positionalIndex].GetComponent<moveCard>().isTouchable = false;
-                        //colidableObject[j].SetActive(false);
-                        //Debug.Log("noOfAvalibleCardsIntray "  + cards[positionalIndex].GetComponent<onCollision>().card.GetComponent<moveCard>().isTouchable);
-                        
-                        Debug.Log("noOfAvalibleCardsIntray ");
+                    
+                    Debug.Log("noOfAvalibleCardsIntray ");
                             noOfAvalibleCardsIntray++;
                         positionalIndex++;
                         
@@ -95,16 +98,11 @@ public class placeCards : MonoBehaviour
                         if (checkEligibility(colidableObject[j].GetComponent<onCollision>().card, positionalIndex, gameManager.trumpcardString))
                         {
                             cards[positionalIndex] = colidableObject[j].GetComponent<onCollision>().card;
-                            cards[positionalIndex].GetComponent<moveCard>().isTouchable = false;     
-//                            colidableObject[j].SetActive(false);
-                            
-                            noOfAvalibleCardsIntray++;
-                            positionalIndex++;
-                        }else if (checkEligibility(colidableObject[j].GetComponent<onCollision>().card, positionalIndex, gameManager.trumpcardString))
+                        if (cards[positionalIndex].tag == "Player2Cards")
                         {
-                            cards[positionalIndex] = colidableObject[j].GetComponent<onCollision>().card;
-                            cards[positionalIndex].GetComponent<moveCard>().isTouchable = false;
-                            //                            colidableObject[j].SetActive(false);
+                            cards[positionalIndex].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
+                        }
+                        cards[positionalIndex].GetComponent<moveCard>().isTouchable = false;     
                             noOfAvalibleCardsIntray++;
                             positionalIndex++;
                         }
@@ -112,9 +110,31 @@ public class placeCards : MonoBehaviour
               if (positionalIndex >=12) {
                         Debug.Log("If Player cards are full then check Win or Loss");
               }
-            
             }
         }
+    }
+    public GameObject deleteCard(string cardName , GameObject [] array) {
+        GameObject gb = null;
+        int foundIndex = -1;
+        for (int i=0;i<array.Length;i++) {
+            if (array[i] != null) {
+                if (array[i].name== cardName) {
+                    foundIndex = i;
+                    gb = array[i];
+                    break;
+                }
+            }
+        }
+        if (foundIndex != -1)
+        {
+            for (int i = foundIndex; i < array.Length - 1; i++)
+            {
+                array[i] = array[i + 1];
+            }
+        }
+        if (gb != null)
+            return gb;
+        return null;
     }
     void setTrumpSuit(string suit)
     {
@@ -162,12 +182,12 @@ public class placeCards : MonoBehaviour
         }
     }
     bool checkEligibility(GameObject obj ,int index, string TrumpSuit) {
-        Debug.Log(cards[index - 1].name[0]);
+        //Debug.Log(cards[index - 1].name[0]);
         Debug.Log(obj.name[0]);
 
-        if (obj.tag != "Player1Cards" && cards[index - 1].tag != "Player1Cards" || obj.tag != "Player2Cards" && cards[index - 1].tag != "Player2Cards")
+        if (obj.tag == "Player1Cards" && cards[index - 1].tag == "Player1Cards" || obj.tag == "Player2Cards" && cards[index - 1].tag == "Player2Cards")
         {
-            return true;
+            return false;
         }
         if (index % 2 !=0 && index!=1 ) {
             if (cards[index].name[0] == cards[index-1].name[0] || cards[index].name[0] == cards[index - 2].name[0])
@@ -186,7 +206,6 @@ public class placeCards : MonoBehaviour
         {
             return true;
         }
-        
             return false;
     }
 }

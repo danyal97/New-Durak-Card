@@ -11,13 +11,14 @@ public class addCards : MonoBehaviour
 {
     [SerializeField]
     GameManager gameManger;
-    GameObject[] myCards = new GameObject[36];
+    
+    public  GameObject[] myCards = new GameObject[36];
     public int myCardsSize = 0;
     public float x;
     public float y;
     public float z;
     public GameObject[] pl1 = new GameObject[36];
-    
+    public bool updateVariable =true;
     DatabaseReference reference;
     float time;
     public enum Player { player1, player2, player3};
@@ -35,14 +36,12 @@ public class addCards : MonoBehaviour
             pl1[i].gameObject.transform.Rotate(Vector3.right*Time.deltaTime*speed);
         }
     }
-    private void Update()
+    public void Update()
     {
-        time += Time.deltaTime;
-        if (time < 5f )
-        {
-            //Debug.Log("Time : " + time);
-            //RotateMyCards();
-        }
+        
+
+        
+        
     }
     private void showCards(string player) {
         if (player == "player1") {
@@ -52,11 +51,16 @@ public class addCards : MonoBehaviour
         }
     }
     public void arangecards(){
+
         float distance = 3f;
+        if (myCardsSize >6 && myCardsSize < 10) {
+            distance = 2.3f;
+        }
         Vector3 pos = new Vector3(x, y, z);
         float lastDistance = 0;
         float lastheight = 0;
-        Vector3 currentEulerAngles;
+        
+      
         if (p == Player.player1)
         {
             lastDistance = pos.x;
@@ -67,9 +71,10 @@ public class addCards : MonoBehaviour
                 {
                     myCards[i].gameObject.transform.position = new Vector3(pos.x, pos.y, -19.6f);
                     myCards[i].gameObject.transform.rotation=  new Quaternion(90,0,0,90);
-                    //myCards[i].transform.eulerAngles = currentEulerAngles;
                     myCards[i].gameObject.SetActive(true);
                     pl1[i] = myCards[i].gameObject;
+                    lastDistance += (distance);
+                    lastheight = lastheight + 0.020627f;
                 }
                 else
                 {
@@ -78,9 +83,11 @@ public class addCards : MonoBehaviour
                     myCards[i].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
                     myCards[i].gameObject.SetActive(true);
                     pl1[i] = myCards[i].gameObject;
+                    lastDistance += (distance);
+                    lastheight = lastheight + 0.020627f;
                 }
-                lastDistance = pos.x + (distance) * i + 1;
-                lastheight = lastheight + 0.020627f;
+                
+                //Debug.Log("Last Distance: "+lastDistance +"i: "+ i);
                 Debug.Log(myCards[i].gameObject.transform.position);
             }
         }
@@ -137,29 +144,28 @@ public class addCards : MonoBehaviour
     public void onEnterReplica(GameObject other) {
         if (!isRecievabe)
         {
+            this.GetComponent<BoxCollider>().isTrigger = false;
             return;
         }
         else
         {
             Debug.Log("OnTriggerEnter------------------------------------");
             
-            if (other.gameObject.tag == "Card")
+            if (other.gameObject.tag == "Card" || other.gameObject.tag == "Player1Cards" || other.gameObject.tag == "Player2Cards")
             {
                 Debug.Log(other.gameObject.name);
                 if (p == Player.player1)
                 {
-                    
                     myCards[myCardsSize] = other.gameObject;
                     other.gameObject.tag = "Player1Cards";
-
                     other.gameObject.SetActive(false);
                     other.GetComponent<moveCard>().isRecieved = true;
                     pl1[pl1Size] = other.gameObject;
                     ++pl1Size;
                     Debug.Log("Pl1 SIze " + pl1Size);
                     ++myCardsSize;
+                    Debug.Log("player1 Cardsize :"+myCardsSize);
                     arangecards();
-
                     if (myCardsSize == 6)
                     {
                         isRecievabe = false;
@@ -168,8 +174,7 @@ public class addCards : MonoBehaviour
                         Debug.Log("condition in triger end-------------------------");
                     }
                 }
-                
-            }else if (p == Player.player1 && other.gameObject.tag == "Player1Cards")
+            }/*else if (p == Player.player1 && other.gameObject.tag == "Player1Cards")
             {
                     Debug.Log("MycardSize :" + myCardsSize);
                     myCards[myCardsSize] = other.gameObject;
@@ -181,7 +186,7 @@ public class addCards : MonoBehaviour
                     Debug.Log("Pl1 SIze " + pl1Size);
                     ++myCardsSize;
                     arangecards();
-            }
+            }*/
         }
     }
 }

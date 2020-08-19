@@ -23,13 +23,13 @@ public class GameManager : MonoBehaviour {
     public Vector3 pos = new Vector3(7.98999977f, -0.200000003f, -1.47000003f);
     private Vector3 topPosition;
     public float speed;
-    private float waitForSecond = 5000;
+    private float time  = 0;
     int carddCurrentIndex = 35;
     public GameObject player1, player2, player3, player4;
     public GameObject trumpCard;
     public string trumpcardString="";
     bool isRestakingDone = false;
-    int currentPositionOffCards = 22;
+    int currentPositionOffCards = 23;
     bool isStacked = true;
 
     // Start is called before the first frame update
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
+        
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         if (isDistrbuting)
@@ -86,102 +87,111 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Distribute() {
-        
-        for (int i = 35; i >= 24; i--) {
-            if (i == 35 || i == 33 || i == 31 || i == 29 || i == 27 || i == 25)
-            {
-                if (!cards[i].GetComponent<moveCard>().isRecieved)
-                {
-                    //Debug.Log(" first");
-                    //cards[i].transform.LookAt(player1.transform);
-                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
-                    if (distance > 0)
-                        cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
-                    //Debug.Log(cards[i].gameObject.name);
-                }
-            }
-            else if (i == 34 || i == 32 || i == 30 || i == 28 || i == 26 || i == 24)
-            {
-                if (!cards[i].GetComponent<moveCard>().isRecieved)
-                {
-                    //Debug.Log(" first");
-                    //cards[i].transform.LookAt(player1.transform);
-                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
-                    if (distance > 0)
-                        cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
-                    //Debug.Log(cards[i].gameObject.name);
-                }
-            }
-            /*
-            if (i == 35 || i == 31 || i == 27 || i == 23 || i == 19 || i == 15)
-            {
-                if (!cards[i].GetComponent<moveCard>().isRecieved)
-                {
-                    Debug.Log(" first");
-                    //cards[i].transform.LookAt(player1.transform);
-                    float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
-                    if (distance > 0)
-                        cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
-                    Debug.Log(cards[i].gameObject.name);
+        time += Time.deltaTime;
+        if (time < 0.5)
+        {
 
-                }
-            }
-            else if (i == 34 || i == 30 || i == 26 || i == 22 || i == 18 || i == 14)
+            for (int i = 35; i >= 24; i--)
             {
-                if (!cards[i].GetComponent<moveCard>().isRecieved)
+                if (i == 35 || i == 33 || i == 31 || i == 29 || i == 27 || i == 25)
                 {
-                    Debug.Log("second");
-                    //cards[i].transform.LookAt(player2.transform);
-                    float distance = Vector3.Distance(cards[i].transform.position, player2.gameObject.transform.position);
-                    if (distance > 0)
-                        cards[i].transform.position += cards[i].transform.right * speed * Time.deltaTime;
-                }
-            }
-            else if (i == 33 || i == 29 || i == 25 || i == 21 || i == 17 || i == 13)
-            {
-                if (!cards[i].GetComponent<moveCard>().isRecieved)
-                {
-                    Debug.Log(" third");
-                    //cards[i].transform.LookAt(player3.transform);
-                    float distance = Vector3.Distance(cards[i].transform.position, player3.gameObject.transform.position);
-                    if (distance > 0)
-                        cards[i].transform.position += -cards[i].transform.right * speed * Time.deltaTime;
-                }
-            }
-            else if (i == 32 || i == 28 || i == 24 || i == 20 || i == 16 || i == 12)
-            {
-                if (!cards[i].GetComponent<moveCard>().isRecieved)
-                {
-                    Debug.Log(" fourth");
-                    //cards[i].transform.LookAt(player4.transform);
-                    float distance = Vector3.Distance(cards[i].transform.position, player4.gameObject.transform.position);
-                    if (distance > 0)
-                        //cards[i].transform.position += cards[i].transform.forward* speed * Time.deltaTime;
-                        cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
-                }
-            }*/
-            
+                    if (!cards[i].GetComponent<moveCard>().isRecieved)
+                    {
 
+                        //Debug.Log(" first");
+                        //cards[i].transform.LookAt(player1.transform);
+                        float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
+                        if (distance > 0)
+                            cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
+                        //Debug.Log(cards[i].gameObject.name);
+                    }
+                }
+                else if (i == 34 || i == 32 || i == 30 || i == 28 || i == 26 || i == 24)
+                {
+                    if (!cards[i].GetComponent<moveCard>().isRecieved)
+                    {
+                        //Debug.Log(" first");
+                        //cards[i].transform.LookAt(player1.transform);
+                        float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
+                        if (distance > 0)
+                            cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
+                        //Debug.Log(cards[i].gameObject.name);
+                    }
+                }
+                /*
+                if (i == 35 || i == 31 || i == 27 || i == 23 || i == 19 || i == 15)
+                {
+                    if (!cards[i].GetComponent<moveCard>().isRecieved)
+                    {
+                        Debug.Log(" first");
+                        //cards[i].transform.LookAt(player1.transform);
+                        float distance = Vector3.Distance(cards[i].transform.position, player1.gameObject.transform.position);
+                        if (distance > 0)
+                            cards[i].transform.position += Vector3.forward * speed * Time.deltaTime;
+                        Debug.Log(cards[i].gameObject.name);
+
+                    }
+                }
+                else if (i == 34 || i == 30 || i == 26 || i == 22 || i == 18 || i == 14)
+                {
+                    if (!cards[i].GetComponent<moveCard>().isRecieved)
+                    {
+                        Debug.Log("second");
+                        //cards[i].transform.LookAt(player2.transform);
+                        float distance = Vector3.Distance(cards[i].transform.position, player2.gameObject.transform.position);
+                        if (distance > 0)
+                            cards[i].transform.position += cards[i].transform.right * speed * Time.deltaTime;
+                    }
+                }
+                else if (i == 33 || i == 29 || i == 25 || i == 21 || i == 17 || i == 13)
+                {
+                    if (!cards[i].GetComponent<moveCard>().isRecieved)
+                    {
+                        Debug.Log(" third");
+                        //cards[i].transform.LookAt(player3.transform);
+                        float distance = Vector3.Distance(cards[i].transform.position, player3.gameObject.transform.position);
+                        if (distance > 0)
+                            cards[i].transform.position += -cards[i].transform.right * speed * Time.deltaTime;
+                    }
+                }
+                else if (i == 32 || i == 28 || i == 24 || i == 20 || i == 16 || i == 12)
+                {
+                    if (!cards[i].GetComponent<moveCard>().isRecieved)
+                    {
+                        Debug.Log(" fourth");
+                        //cards[i].transform.LookAt(player4.transform);
+                        float distance = Vector3.Distance(cards[i].transform.position, player4.gameObject.transform.position);
+                        if (distance > 0)
+                            //cards[i].transform.position += cards[i].transform.forward* speed * Time.deltaTime;
+                            cards[i].transform.position += Vector3.back * speed * Time.deltaTime;
+                    }
+                }*/
+
+
+            }
+            time = 0;
         }
     }
     public void SetTrumpCard(){
-
         Debug.Log("start");
-
+        
         GameObject temp = cards[23].gameObject;
-            cards[23] = cards[0].gameObject;
-            cards[0] = temp;
-            trumpCard = cards[0].gameObject;
-            for (int j = 23; j >= 1; j--)
-            {
+        cards[23] = cards[0].gameObject;
+        cards[0] = temp;
+        trumpCard = cards[0].gameObject;
+        
+
+        for (int j = 23; j >= 1; j--)
+        {
                 Debug.Log("j"  +j);
-                ///newCards[j] = cards[j];
                 newCards[j] = cards[j];
                 Debug.Log(""+ newCards[j]);
-            }
+        }
         Debug.Log("end");
         StackCards();
-        cards[0].gameObject.transform.rotation = new Quaternion(90, 0, 0, 90);
+        
+        cards[23].transform.rotation = new Quaternion(-90, 0, 0, 90);
+        trumpCard.transform.rotation = new Quaternion(90, 0, 0, 90);
 
         //Debug.Log("Quratation " + cards[0].gameObject.transform.rotation);
         if (cards[0].name.Contains("C"))

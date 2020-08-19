@@ -99,37 +99,38 @@ public class moveCard : MonoBehaviour
             RaycastHit hitInfo;
             if (Physics.Raycast(ray, out hitInfo))
             {
-                if (hitInfo.collider.gameObject.tag == "Player1Cards" )
+                if (hitInfo.collider.gameObject.tag == "Player1Cards" || hitInfo.collider.gameObject.tag == "Player2Cards")
                 {
                     GameObject gb = hitInfo.collider.gameObject;
                     selected = gb;
-
                 }
-                
             }
         }
-        if (Input.touchCount > 0 )
+        if(Input.touchCount > 0 )
             {
             if (selected != null && isTouchable == true)
             {
                 Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Moved)
+                if (touch.phase == TouchPhase.Moved )
                 {
                     Debug.Log(selected);
                     selected.transform.position = new Vector3(selected.transform.position.x + touch.deltaPosition.x * speedModifier,
                     selected.transform.position.y,
                     selected.transform.position.z + touch.deltaPosition.y * speedModifier
                     );
+                    
+                }
+                if (touch.phase == TouchPhase.Ended)
+                {
                     string posx = selected.transform.position.x.ToString();
                     string posy = selected.transform.position.y.ToString();
                     string posz = selected.transform.position.z.ToString();
                     playerCardInfo.AddCoordinatesToDatabse("1", this.gameObject.name, posx, posy, posz);
-
                 }
             }
             else
             {
-                selected = null;
+                
             }
         }
     }
@@ -161,7 +162,6 @@ class PlayBoard {
     public PlayBoard()
     {}
     public void addPlayboardItem(Place p) {
-        
         playboardItems.Add(p);
     }
 }
